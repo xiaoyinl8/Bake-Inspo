@@ -1,9 +1,17 @@
 import { useMemo, useState } from "react";
-import recipes from "./data/recipes.json";
 
-// Split "pistachio, butter" or "pistachio butter" into lowercase keywords
+// Loads every .json file in src/data, so new recipe files need no code changes
+const recipeFiles = import.meta.glob("./data/*.json", { eager: true });
+const recipes = Object.values(recipeFiles).flatMap((m) => m.default);
+
+// "Pistachios, butter" -> ["pistachio", "butter"] (plurals trimmed)
 const tokenize = (q) =>
-  q.toLowerCase().split(/[,\s]+/).map((t) => t.trim()).filter(Boolean);
+  q
+    .toLowerCase()
+    .split(/[,\s]+/)
+    .map((t) => t.trim())
+    .filter(Boolean)
+    .map((t) => (t.length > 3 && t.endsWith("s") && !t.endsWith("ss") ? t.slice(0, -1) : t));
 
 // Score = how many keywords appear in the recipe's name, tags or ingredients
 function searchRecipes(query) {
@@ -25,7 +33,7 @@ function searchRecipes(query) {
 
 function StepImage({ src, alt }) {
   const [failed, setFailed] = useState(false);
-  if (failed) {
+  if (!src || failed) {
     return <div className="img-placeholder">image coming soon</div>;
   }
   return <img src={src} alt={alt} loading="lazy" onError={() => setFailed(true)} />;
@@ -74,7 +82,10 @@ function RecipePage({ recipe, onBack }) {
                   </p>
                 )}
               </div>
-              <StepImage src={s.image} alt={`${recipe.name}: ${s.title}`} />
+              <StepImage
+                src={s.image ?? `images/${recipe.id}/step${idx + 1}.png`}
+                alt={`${recipe.name}: ${s.title}`}
+              />
             </li>
           ))}
         </ol>
@@ -88,19 +99,27 @@ export default function App() {
   const [selected, setSelected] = useState(null);
   const results = useMemo(() => searchRecipes(query), [query]);
 
+  const surprise = () => {
+    const pool = results.length > 0 ? results : recipes;
+    setSelected(pool[Math.floor(Math.random() * pool.length)]);
+  };
+
   return (
     <main>
       <header className="hero">
         <h1>Bake Inspo</h1>
         <p>Out of ideas? Type what's in your pantry and see what you can bake.</p>
-        <input
-          type="search"
-          className="search"
-          placeholder="Try: pistachio, butter, yeast"
-          value={query}
-          onChange={(e) => { setQuery(e.target.value); setSelected(null); }}
-          aria-label="Search recipes by ingredient"
-        />
+        <div className="search-row">
+          <input
+            type="search"
+            className="search"
+            placeholder="Try: lemon, banana, no mixer, chocolate"
+            value={query}
+            onChange={(e) => { setQuery(e.target.value); setSelected(null); }}
+            aria-label="Search recipes by ingredient"
+          />
+          <button className="surprise" onClick={surprise}>Surprise me</button>
+        </div>
       </header>
 
       {selected ? (
