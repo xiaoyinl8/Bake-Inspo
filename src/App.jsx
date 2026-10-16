@@ -99,27 +99,21 @@ export default function App() {
   const [selected, setSelected] = useState(null);
   const results = useMemo(() => searchRecipes(query), [query]);
 
-  const surprise = () => {
-    const pool = results.length > 0 ? results : recipes;
-    setSelected(pool[Math.floor(Math.random() * pool.length)]);
-  };
-
   return (
     <main>
       <header className="hero">
         <h1>Bake Inspo</h1>
         <p>Out of ideas? Type what's in your pantry and see what you can bake.</p>
-        <div className="search-row">
-          <input
-            type="search"
-            className="search"
-            placeholder="Try: lemon, banana, no mixer, chocolate"
-            value={query}
-            onChange={(e) => { setQuery(e.target.value); setSelected(null); }}
-            aria-label="Search recipes by ingredient"
-          />
-          <button className="surprise" onClick={surprise}>Surprise me</button>
-        </div>
+
+        <input
+          type="search"
+          className="search"
+          placeholder="Try: lemon, banana, no mixer, chocolate"
+          value={query}
+          onChange={(e) => { setQuery(e.target.value); setSelected(null); }}
+          aria-label="Search recipes by ingredient"
+        />
+        
       </header>
 
       {selected ? (
