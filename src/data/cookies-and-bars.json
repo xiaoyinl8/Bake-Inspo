@@ -1,0 +1,117 @@
+[
+  {
+    "id": "snickerdoodles", "name": "Snickerdoodles", "emoji": "🍪",
+    "tags": ["cookie", "cinnamon", "butter", "chewy", "beginner", "classic"],
+    "totalTime": "about 40 minutes", "yield": "about 18 cookies",
+    "ingredients": [
+      { "name": "butter (soft)", "grams": 115 }, { "name": "sugar", "grams": 200 }, { "name": "egg", "grams": 50 },
+      { "name": "vanilla extract", "grams": 5 }, { "name": "all-purpose flour", "grams": 250 },
+      { "name": "cream of tartar", "grams": 6 }, { "name": "baking soda", "grams": 3 }, { "name": "salt", "grams": 2 },
+      { "name": "coating: sugar", "grams": 40 }, { "name": "coating: cinnamon", "grams": 8 }
+    ],
+    "steps": [
+      { "title": "Cream", "text": "Beat butter and sugar with the paddle on medium for 3 minutes. Add the egg and vanilla." },
+      { "title": "Add the dry ingredients", "text": "Mix flour, cream of tartar, baking soda and salt, then add on low until a soft dough forms." },
+      { "title": "Roll in cinnamon sugar", "text": "Roll 40 g balls in the cinnamon and sugar and place them on a lined tray, spaced apart." },
+      { "title": "Bake", "text": "Bake until the edges are set and the centers look slightly underdone.", "time": "9-11 min", "temp": "190 °C" }
+    ]
+  },
+  {
+    "id": "sugar-cutout-cookies", "name": "Cut-Out Sugar Cookies", "emoji": "⭐",
+    "tags": ["cookie", "sugar cookie", "cutout", "holiday", "decorating", "butter", "vanilla"],
+    "totalTime": "about 1 hour 30 minutes", "yield": "about 30 cookies",
+    "ingredients": [
+      { "name": "butter (soft)", "grams": 225 }, { "name": "sugar", "grams": 200 }, { "name": "egg", "grams": 50 },
+      { "name": "vanilla extract", "grams": 8 }, { "name": "all-purpose flour", "grams": 400 },
+      { "name": "baking powder", "grams": 3 }, { "name": "salt", "grams": 3 }
+    ],
+    "steps": [
+      { "title": "Mix the dough", "text": "Cream butter and sugar with the paddle for 2 minutes. Add the egg and vanilla, then the flour, baking powder and salt on low until it comes together." },
+      { "title": "Chill", "text": "Divide into two discs, wrap, and chill until firm.", "time": "1 hour" },
+      { "title": "Roll and cut", "text": "Roll to 5 mm on a floured counter, cut shapes, and place on a lined tray. Chill the cut cookies for 10 minutes so they keep their shape." },
+      { "title": "Bake", "text": "Bake until the edges are just turning golden. Cool completely before icing.", "time": "9-11 min", "temp": "180 °C" }
+    ]
+  },
+  {
+    "id": "lemon-bars", "name": "Lemon Bars", "emoji": "🍋",
+    "tags": ["bar", "lemon", "citrus", "shortbread", "dessert", "potluck"],
+    "totalTime": "about 1 hour 15 minutes", "yield": "16 bars",
+    "ingredients": [
+      { "name": "crust: all-purpose flour", "grams": 190 }, { "name": "crust: butter (soft)", "grams": 115 },
+      { "name": "crust: powdered sugar", "grams": 50 }, { "name": "crust: salt", "grams": 1 },
+      { "name": "filling: sugar", "grams": 200 }, { "name": "filling: eggs", "grams": 200 },
+      { "name": "filling: all-purpose flour", "grams": 30 }, { "name": "filling: lemon juice", "grams": 120 },
+      { "name": "filling: lemon zest", "grams": 6 }
+    ],
+    "steps": [
+      { "title": "Make the crust", "text": "Mix crust ingredients with the paddle on low until crumbly. Press firmly into a lined 20 cm square pan." },
+      { "title": "Bake the crust", "text": "Bake until lightly golden at the edges.", "time": "18-20 min", "temp": "175 °C" },
+      { "title": "Whisk the filling", "text": "Whisk sugar, eggs, flour, juice and zest until smooth. Pour over the warm crust." },
+      { "title": "Bake and cool", "text": "Bake until the center is just set. Cool completely, chill, and dust with powdered sugar before cutting.", "time": "20-25 min", "temp": "175 °C" }
+    ]
+  },
+  {
+    "id": "almond-biscotti", "name": "Almond Biscotti", "emoji": "🥖",
+    "tags": ["cookie", "biscotti", "almond", "italian", "coffee", "crunchy", "no butter", "nut"],
+    "totalTime": "about 1 hour 15 minutes", "yield": "about 24 biscotti",
+    "ingredients": [
+      { "name": "all-purpose flour", "grams": 250 }, { "name": "sugar", "grams": 150 }, { "name": "baking powder", "grams": 5 },
+      { "name": "salt", "grams": 1 }, { "name": "eggs", "grams": 120 }, { "name": "whole almonds", "grams": 100 },
+      { "name": "vanilla extract", "grams": 5 }
+    ],
+    "steps": [
+      { "title": "Mix", "text": "Mix flour, sugar, baking powder and salt. Add eggs and vanilla and mix on low until a sticky dough forms, then fold in the almonds." },
+      { "title": "Shape the log", "text": "With wet hands, shape into a flat log about 30 cm long and 8 cm wide on a lined tray." },
+      { "title": "First bake", "text": "Bake until golden and firm. Cool for 10 minutes.", "time": "25-30 min", "temp": "175 °C" },
+      { "title": "Slice and bake again", "text": "Slice into 1.5 cm pieces with a serrated knife, lay them flat, and bake until dry and crisp, flipping once.", "time": "10 min per side", "temp": "160 °C" }
+    ]
+  },
+  {
+    "id": "ginger-molasses-cookies", "name": "Ginger Molasses Cookies", "emoji": "🫚",
+    "tags": ["cookie", "ginger", "molasses", "spice", "holiday", "chewy", "winter"],
+    "totalTime": "about 1 hour", "yield": "about 22 cookies",
+    "ingredients": [
+      { "name": "butter (soft)", "grams": 170 }, { "name": "brown sugar", "grams": 150 }, { "name": "molasses", "grams": 85 },
+      { "name": "egg", "grams": 50 }, { "name": "all-purpose flour", "grams": 280 }, { "name": "baking soda", "grams": 7 },
+      { "name": "ground ginger", "grams": 6 }, { "name": "cinnamon", "grams": 4 }, { "name": "ground cloves", "grams": 1 },
+      { "name": "salt", "grams": 2 }, { "name": "sugar (for rolling)", "grams": 50 }
+    ],
+    "steps": [
+      { "title": "Cream", "text": "Beat butter and brown sugar with the paddle for 2 minutes. Add molasses and egg and mix until smooth." },
+      { "title": "Add dry ingredients", "text": "Add flour, baking soda, spices and salt and mix on low until combined." },
+      { "title": "Chill", "text": "Chill the dough until firm enough to roll.", "time": "30 min" },
+      { "title": "Roll and bake", "text": "Roll into 35 g balls, coat in sugar, and place on a lined tray. Bake until the tops crack and the edges set.", "time": "10-12 min", "temp": "175 °C" }
+    ]
+  },
+  {
+    "id": "blondies", "name": "Brown Sugar Blondies", "emoji": "🟫",
+    "tags": ["bar", "blondie", "brown sugar", "chocolate", "white chocolate", "chewy", "beginner", "quick"],
+    "totalTime": "about 45 minutes", "yield": "16 squares",
+    "ingredients": [
+      { "name": "butter (melted)", "grams": 115 }, { "name": "brown sugar", "grams": 200 }, { "name": "eggs", "grams": 100 },
+      { "name": "vanilla extract", "grams": 8 }, { "name": "all-purpose flour", "grams": 150 }, { "name": "baking powder", "grams": 2 },
+      { "name": "salt", "grams": 3 }, { "name": "chocolate chips or white chocolate chunks", "grams": 120 }
+    ],
+    "steps": [
+      { "title": "Whisk", "text": "Whisk melted butter and brown sugar, then beat in the eggs and vanilla until glossy." },
+      { "title": "Fold in the dry ingredients", "text": "Fold in flour, baking powder and salt just until combined, then fold in the chocolate." },
+      { "title": "Bake", "text": "Spread into a lined 20 cm square pan. Bake until the edges are set and the center is slightly soft. Cool before cutting.", "time": "22-25 min", "temp": "175 °C" }
+    ]
+  },
+  {
+    "id": "tahini-chocolate-cookies", "name": "Tahini Chocolate Chip Cookies", "emoji": "🌰",
+    "tags": ["cookie", "tahini", "sesame", "chocolate", "chocolate chip", "nutty", "dessert"],
+    "totalTime": "about 40 minutes", "yield": "about 20 cookies",
+    "ingredients": [
+      { "name": "butter (soft)", "grams": 115 }, { "name": "tahini", "grams": 100 }, { "name": "brown sugar", "grams": 150 },
+      { "name": "sugar", "grams": 50 }, { "name": "egg", "grams": 50 }, { "name": "all-purpose flour", "grams": 200 },
+      { "name": "baking soda", "grams": 3 }, { "name": "salt", "grams": 3 }, { "name": "chopped dark chocolate", "grams": 150 },
+      { "name": "sesame seeds", "grams": 20 }
+    ],
+    "steps": [
+      { "title": "Cream", "text": "Beat butter, tahini and both sugars with the paddle for 3 minutes, then add the egg." },
+      { "title": "Add dry ingredients", "text": "Add flour, baking soda and salt on low, then mix in the chocolate." },
+      { "title": "Scoop and bake", "text": "Scoop 40 g balls, roll the tops in sesame seeds, and bake until the edges are golden.", "time": "10-12 min", "temp": "175 °C" }
+    ]
+  }
+]
