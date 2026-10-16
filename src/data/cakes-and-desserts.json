@@ -1,0 +1,89 @@
+[
+  {
+    "id": "one-bowl-chocolate-cake", "name": "One-Bowl Chocolate Cake", "emoji": "🎂",
+    "tags": ["cake", "chocolate", "cocoa", "birthday", "ganache", "beginner", "oil"],
+    "totalTime": "about 1 hour 30 minutes", "yield": "one 2-layer 20 cm cake",
+    "ingredients": [
+      { "name": "all-purpose flour", "grams": 200 }, { "name": "sugar", "grams": 300 }, { "name": "cocoa powder", "grams": 75 },
+      { "name": "baking powder", "grams": 6 }, { "name": "baking soda", "grams": 6 }, { "name": "salt", "grams": 3 },
+      { "name": "eggs", "grams": 100 }, { "name": "milk or buttermilk", "grams": 240 }, { "name": "neutral oil", "grams": 120 },
+      { "name": "vanilla extract", "grams": 8 }, { "name": "hot coffee or hot water", "grams": 240 },
+      { "name": "ganache: heavy cream", "grams": 200 }, { "name": "ganache: dark chocolate", "grams": 200 }
+    ],
+    "steps": [
+      { "title": "Mix the batter", "text": "Mix flour, sugar, cocoa, baking powder, baking soda and salt in the mixer. Add eggs, milk, oil and vanilla and mix on medium for 2 minutes." },
+      { "title": "Add the hot liquid", "text": "On low speed, slowly pour in the hot coffee. The batter will be thin, which is normal." },
+      { "title": "Bake", "text": "Divide between two lined 20 cm pans. Bake until a toothpick comes out clean, then cool completely.", "time": "30-35 min", "temp": "175 °C" },
+      { "title": "Make the ganache", "text": "Heat the cream until steaming, pour over the chopped chocolate, wait 2 minutes, and stir smooth. Let it thicken, then fill and cover the cake." }
+    ]
+  },
+  {
+    "id": "carrot-cake", "name": "Carrot Cake with Cream Cheese Frosting", "emoji": "🥕",
+    "tags": ["cake", "carrot", "cream cheese", "walnut", "spice", "cinnamon", "frosting"],
+    "totalTime": "about 1 hour 30 minutes", "yield": "one 23 cm square cake",
+    "ingredients": [
+      { "name": "all-purpose flour", "grams": 250 }, { "name": "brown sugar", "grams": 200 }, { "name": "baking powder", "grams": 5 },
+      { "name": "baking soda", "grams": 5 }, { "name": "cinnamon", "grams": 6 }, { "name": "salt", "grams": 3 },
+      { "name": "neutral oil", "grams": 180 }, { "name": "eggs", "grams": 150 }, { "name": "grated carrots", "grams": 300 },
+      { "name": "walnuts (chopped)", "grams": 80 }, { "name": "frosting: cream cheese", "grams": 200 },
+      { "name": "frosting: butter (soft)", "grams": 60 }, { "name": "frosting: powdered sugar", "grams": 120 },
+      { "name": "frosting: vanilla extract", "grams": 5 }
+    ],
+    "steps": [
+      { "title": "Mix the wet ingredients", "text": "Beat brown sugar, oil and eggs on medium for 2 minutes. Stir in the carrots." },
+      { "title": "Add dry ingredients", "text": "Add flour, baking powder, baking soda, cinnamon and salt on low until just combined. Fold in the walnuts." },
+      { "title": "Bake", "text": "Pour into a lined 23 cm square pan. Bake until a toothpick comes out clean, then cool completely.", "time": "35-40 min", "temp": "175 °C" },
+      { "title": "Frost", "text": "Beat cream cheese and butter until smooth, add powdered sugar and vanilla, and spread over the cooled cake." }
+    ]
+  },
+  {
+    "id": "lemon-olive-oil-cake", "name": "Lemon Olive Oil Cake", "emoji": "🫒",
+    "tags": ["cake", "lemon", "olive oil", "citrus", "italian", "simple", "no frosting", "beginner"],
+    "totalTime": "about 1 hour 10 minutes", "yield": "one 20 cm cake",
+    "ingredients": [
+      { "name": "all-purpose flour", "grams": 200 }, { "name": "sugar", "grams": 200 }, { "name": "baking powder", "grams": 8 },
+      { "name": "salt", "grams": 2 }, { "name": "eggs", "grams": 150 }, { "name": "olive oil", "grams": 120 },
+      { "name": "milk or plain yogurt", "grams": 120 }, { "name": "lemon zest", "grams": 8 }, { "name": "lemon juice", "grams": 40 }
+    ],
+    "steps": [
+      { "title": "Whip the eggs", "text": "Rub the zest into the sugar, then whisk with the eggs on medium-high for 3 minutes until pale and thick." },
+      { "title": "Add the wet ingredients", "text": "Stream in the olive oil, milk and lemon juice on low speed." },
+      { "title": "Fold in the flour", "text": "Fold in the flour, baking powder and salt by hand just until no streaks remain." },
+      { "title": "Bake", "text": "Pour into a lined 20 cm round pan. Bake until golden and a toothpick comes out clean.", "time": "35-40 min", "temp": "175 °C" }
+    ]
+  },
+  {
+    "id": "cinnamon-streusel-coffee-cake", "name": "Cinnamon Streusel Coffee Cake", "emoji": "☕",
+    "tags": ["cake", "coffee cake", "cinnamon", "streusel", "sour cream", "breakfast", "brunch"],
+    "totalTime": "about 1 hour 15 minutes", "yield": "one 23 cm square cake",
+    "ingredients": [
+      { "name": "cake: all-purpose flour", "grams": 250 }, { "name": "cake: sugar", "grams": 150 }, { "name": "cake: baking powder", "grams": 7 },
+      { "name": "cake: baking soda", "grams": 2 }, { "name": "cake: salt", "grams": 2 }, { "name": "cake: butter (soft)", "grams": 115 },
+      { "name": "cake: eggs", "grams": 100 }, { "name": "cake: sour cream", "grams": 240 }, { "name": "cake: vanilla extract", "grams": 8 },
+      { "name": "streusel: all-purpose flour", "grams": 100 }, { "name": "streusel: brown sugar", "grams": 100 },
+      { "name": "streusel: cold butter (cubed)", "grams": 60 }, { "name": "streusel: cinnamon", "grams": 6 }
+    ],
+    "steps": [
+      { "title": "Make the streusel", "text": "Rub the streusel ingredients together with your fingers until clumpy. Chill while you make the batter." },
+      { "title": "Mix the batter", "text": "Cream butter and sugar for 3 minutes, add eggs and vanilla, then alternate the dry ingredients and sour cream on low." },
+      { "title": "Assemble", "text": "Spread half the batter in a lined 23 cm pan, scatter over a third of the streusel, add the remaining batter, and top with the rest of the streusel." },
+      { "title": "Bake", "text": "Bake until a toothpick comes out clean. Cool for 20 minutes.", "time": "40-45 min", "temp": "175 °C" }
+    ]
+  },
+  {
+    "id": "tiramisu", "name": "Tiramisu", "emoji": "☕",
+    "tags": ["no bake", "tiramisu", "coffee", "mascarpone", "italian", "cocoa", "dessert", "impressive"],
+    "totalTime": "about 40 minutes (plus 6 hours chilling)", "yield": "one 20 x 20 cm dish",
+    "ingredients": [
+      { "name": "mascarpone", "grams": 500 }, { "name": "egg yolks", "grams": 100 }, { "name": "sugar", "grams": 100 },
+      { "name": "heavy cream", "grams": 200 }, { "name": "ladyfingers (savoiardi)", "grams": 200 },
+      { "name": "strong espresso or coffee, cooled", "grams": 250 }, { "name": "cocoa powder (for dusting)", "grams": 15 }
+    ],
+    "steps": [
+      { "title": "Cook the yolks", "text": "Whisk yolks and sugar in a heatproof bowl over barely simmering water until thick and about 71 °C, which takes 5 to 8 minutes. This makes the cream safer to eat. Let it cool completely." },
+      { "title": "Make the cream", "text": "Beat the cooled yolk mixture with the mascarpone until smooth. In the mixer, whip the cream to stiff peaks and fold it in." },
+      { "title": "Layer", "text": "Dip each ladyfinger in the coffee for 1 to 2 seconds and arrange half in the dish. Spread half the cream on top, then repeat." },
+      { "title": "Chill", "text": "Cover and chill so the layers set. Dust with cocoa just before serving.", "time": "6 hours or overnight" }
+    ]
+  }
+]
