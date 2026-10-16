@@ -1,0 +1,97 @@
+[
+  {
+    "id": "milk-bread", "name": "Japanese Milk Bread", "emoji": "🍞",
+    "tags": ["bread", "milk bread", "shokupan", "soft", "yeast", "sandwich", "tangzhong", "japanese"],
+    "totalTime": "about 4 hours", "yield": "1 loaf",
+    "ingredients": [
+      { "name": "tangzhong: bread flour", "grams": 30 }, { "name": "tangzhong: water", "grams": 75 }, { "name": "tangzhong: milk", "grams": 75 },
+      { "name": "bread flour", "grams": 370 }, { "name": "milk", "grams": 130 }, { "name": "sugar", "grams": 40 },
+      { "name": "instant yeast", "grams": 6 }, { "name": "salt", "grams": 7 }, { "name": "egg", "grams": 50 }, { "name": "butter (soft)", "grams": 30 }
+    ],
+    "steps": [
+      { "title": "Cook the tangzhong", "text": "Whisk the tangzhong ingredients in a small pot over medium-low heat, stirring until it thickens to a pudding. Cool for 15 minutes." },
+      { "title": "Knead", "text": "Add everything except the butter to the mixer with the tangzhong. Knead with the dough hook for 8 minutes, add the butter, and knead 8 to 10 more minutes until smooth and stretchy." },
+      { "title": "First rise", "text": "Cover and let it double.", "time": "60-90 min", "temp": "26-28 °C" },
+      { "title": "Shape and proof", "text": "Divide into 3 pieces, roll each flat, fold in thirds, roll up, and place side by side in a greased loaf pan. Proof until the dough crowns the rim.", "time": "45-60 min" },
+      { "title": "Bake", "text": "Bake until deep golden. Brush with butter and cool on a rack.", "time": "30-35 min", "temp": "175 °C" }
+    ]
+  },
+  {
+    "id": "soft-dinner-rolls", "name": "Soft Dinner Rolls", "emoji": "🥖",
+    "tags": ["bread", "roll", "dinner roll", "yeast", "butter", "milk", "holiday", "side"],
+    "totalTime": "about 2 hours 30 minutes", "yield": "12 rolls",
+    "ingredients": [
+      { "name": "bread flour", "grams": 450 }, { "name": "warm milk", "grams": 240 }, { "name": "sugar", "grams": 40 },
+      { "name": "instant yeast", "grams": 7 }, { "name": "salt", "grams": 7 }, { "name": "butter (soft)", "grams": 55 }, { "name": "egg", "grams": 50 }
+    ],
+    "steps": [
+      { "title": "Knead", "text": "Combine everything in the mixer and knead with the dough hook for 8 to 10 minutes until smooth." },
+      { "title": "First rise", "text": "Cover and let it double.", "time": "60 min", "temp": "26-28 °C" },
+      { "title": "Shape and proof", "text": "Divide into 12 pieces, shape into tight balls, and place in a greased baking dish. Cover and proof until puffy.", "time": "40 min" },
+      { "title": "Bake", "text": "Bake until golden and brush with melted butter while hot.", "time": "15-18 min", "temp": "190 °C" }
+    ]
+  },
+  {
+    "id": "soft-pretzels", "name": "Soft Pretzels", "emoji": "🥨",
+    "tags": ["bread", "pretzel", "yeast", "snack", "savory", "baking soda", "party"],
+    "totalTime": "about 2 hours", "yield": "8 pretzels",
+    "ingredients": [
+      { "name": "bread flour", "grams": 500 }, { "name": "warm water", "grams": 300 }, { "name": "sugar", "grams": 10 },
+      { "name": "instant yeast", "grams": 7 }, { "name": "salt", "grams": 8 }, { "name": "butter (soft)", "grams": 30 },
+      { "name": "bath: water", "grams": 1500 }, { "name": "bath: baking soda", "grams": 90 }, { "name": "coarse salt, to top", "grams": 10 }
+    ],
+    "steps": [
+      { "title": "Knead", "text": "Combine the dough ingredients in the mixer and knead with the dough hook for 6 to 8 minutes until smooth and firm." },
+      { "title": "Rise", "text": "Cover and let it rise until doubled.", "time": "45-60 min" },
+      { "title": "Shape", "text": "Divide into 8 pieces, roll each into a 50 cm rope, and twist into a pretzel shape." },
+      { "title": "Boil", "text": "Bring the water and baking soda to a boil. Lower in each pretzel for 30 seconds, drain, place on a lined tray, and sprinkle with coarse salt." },
+      { "title": "Bake", "text": "Bake until deep brown.", "time": "12-14 min", "temp": "220 °C" }
+    ]
+  },
+  {
+    "id": "bagels", "name": "Homemade Bagels", "emoji": "🥯",
+    "tags": ["bread", "bagel", "yeast", "breakfast", "boiled", "chewy", "weekend"],
+    "totalTime": "about 3 hours", "yield": "8 bagels",
+    "ingredients": [
+      { "name": "bread flour", "grams": 500 }, { "name": "water", "grams": 270 }, { "name": "sugar", "grams": 20 },
+      { "name": "instant yeast", "grams": 5 }, { "name": "salt", "grams": 10 }, { "name": "honey (for the boiling water)", "grams": 20 },
+      { "name": "toppings: sesame, poppy seeds or everything seasoning", "grams": 30 }
+    ],
+    "steps": [
+      { "title": "Knead", "text": "Combine the dough ingredients in the mixer. This is a stiff dough, so knead with the dough hook on low for 8 to 10 minutes and stop if the mixer struggles." },
+      { "title": "First rise", "text": "Cover and let it rise until doubled.", "time": "60 min" },
+      { "title": "Shape", "text": "Divide into 8 pieces, shape into balls, poke a hole through each, and stretch into rings. Rest on a lined tray.", "time": "20 min" },
+      { "title": "Boil", "text": "Simmer in water with the honey for 1 minute per side. Drain, then dip in toppings." },
+      { "title": "Bake", "text": "Bake until deep golden brown.", "time": "20-22 min", "temp": "220 °C" }
+    ]
+  },
+  {
+    "id": "skillet-cornbread", "name": "Skillet Cornbread", "emoji": "🌽",
+    "tags": ["bread", "cornbread", "cornmeal", "quick bread", "buttermilk", "savory", "no yeast", "quick", "beginner"],
+    "totalTime": "about 40 minutes", "yield": "8 wedges",
+    "ingredients": [
+      { "name": "cornmeal", "grams": 150 }, { "name": "all-purpose flour", "grams": 125 }, { "name": "sugar", "grams": 50 },
+      { "name": "baking powder", "grams": 12 }, { "name": "salt", "grams": 4 }, { "name": "buttermilk", "grams": 240 },
+      { "name": "eggs", "grams": 100 }, { "name": "butter (melted)", "grams": 85 }
+    ],
+    "steps": [
+      { "title": "Heat the skillet", "text": "Put a 20 cm cast-iron skillet with 15 g of the butter in the oven while it preheats." },
+      { "title": "Mix", "text": "Mix the dry ingredients, then stir in buttermilk, eggs and the remaining melted butter just until combined." },
+      { "title": "Bake", "text": "Pour into the hot skillet and bake until golden and set in the center.", "time": "20-25 min", "temp": "200 °C" }
+    ]
+  },
+  {
+    "id": "irish-soda-bread", "name": "Irish Soda Bread", "emoji": "☘️",
+    "tags": ["bread", "soda bread", "buttermilk", "no yeast", "quick bread", "irish", "beginner", "few ingredients", "no mixer"],
+    "totalTime": "about 1 hour", "yield": "1 loaf",
+    "ingredients": [
+      { "name": "all-purpose flour", "grams": 450 }, { "name": "baking soda", "grams": 5 }, { "name": "salt", "grams": 6 },
+      { "name": "buttermilk", "grams": 400 }
+    ],
+    "steps": [
+      { "title": "Mix", "text": "Whisk flour, baking soda and salt. Add the buttermilk and stir with a spatula until a shaggy dough forms." },
+      { "title": "Shape", "text": "Turn out onto a floured counter and shape into a round about 5 cm thick with minimal handling. Cut a deep cross in the top." },
+      { "title": "Bake", "text": "Bake hot for 15 minutes, then lower the heat and bake until the bottom sounds hollow when tapped.", "time": "15 min, then 20-25 min", "temp": "220 °C, then 190 °C" }
+    ]
+  }
+]
