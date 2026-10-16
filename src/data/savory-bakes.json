@@ -1,0 +1,82 @@
+[
+  {
+    "id": "quiche-lorraine", "name": "Quiche Lorraine", "emoji": "🥓",
+    "tags": ["savory", "quiche", "bacon", "cheese", "egg", "french", "brunch", "gruyere", "pastry"],
+    "totalTime": "about 2 hours", "yield": "one 23 cm quiche",
+    "ingredients": [
+      { "name": "crust: all-purpose flour", "grams": 200 }, { "name": "crust: cold butter (cubed)", "grams": 100 },
+      { "name": "crust: salt", "grams": 2 }, { "name": "crust: ice water", "grams": 45 },
+      { "name": "bacon (chopped)", "grams": 150 }, { "name": "eggs", "grams": 200 }, { "name": "heavy cream", "grams": 250 },
+      { "name": "milk", "grams": 100 }, { "name": "grated gruyère or Swiss cheese", "grams": 100 },
+      { "name": "salt", "grams": 3 }, { "name": "black pepper and a pinch of nutmeg", "grams": 2 }
+    ],
+    "steps": [
+      { "title": "Make and chill the dough", "text": "Mix crust ingredients in the mixer with the paddle until the dough just comes together. Chill.", "time": "1 hour" },
+      { "title": "Blind bake", "text": "Roll into a 23 cm tart pan, line with parchment and weights, and bake. Remove the weights and bake 5 minutes more.", "time": "15 min + 5 min", "temp": "190 °C" },
+      { "title": "Cook the bacon", "text": "Fry the bacon until crisp and drain it. Scatter it with the cheese in the crust." },
+      { "title": "Add the custard and bake", "text": "Whisk eggs, cream, milk, salt, pepper and nutmeg and pour over the filling. Bake until set with a slight wobble in the center. Rest 10 minutes before slicing.", "time": "30-35 min", "temp": "175 °C" }
+    ]
+  },
+  {
+    "id": "gougeres", "name": "Cheese Gougères", "emoji": "🧀",
+    "tags": ["savory", "choux", "cheese", "gruyere", "french", "appetizer", "party", "pastry"],
+    "totalTime": "about 1 hour", "yield": "about 30 puffs",
+    "ingredients": [
+      { "name": "milk", "grams": 125 }, { "name": "water", "grams": 125 }, { "name": "butter", "grams": 100 },
+      { "name": "all-purpose flour", "grams": 140 }, { "name": "salt", "grams": 3 }, { "name": "eggs", "grams": 200 },
+      { "name": "grated gruyère", "grams": 120 }, { "name": "black pepper and a pinch of nutmeg", "grams": 2 }
+    ],
+    "steps": [
+      { "title": "Cook the paste", "text": "Bring milk, water, butter and salt to a boil. Add the flour at once and stir hard for 2 minutes until a ball forms." },
+      { "title": "Beat in the eggs", "text": "Move to the mixer and beat with the paddle on low to cool slightly. Add the eggs gradually until the paste is glossy. Mix in 90 g of the cheese, pepper and nutmeg." },
+      { "title": "Pipe", "text": "Pipe or spoon walnut-sized mounds onto lined trays and sprinkle with the remaining cheese." },
+      { "title": "Bake", "text": "Bake hot until puffed, then lower the heat until deep golden and crisp. Do not open the oven early. Serve warm.", "time": "12 min, then 15-18 min", "temp": "200 °C, then 175 °C" }
+    ]
+  },
+  {
+    "id": "sausage-rolls", "name": "Sausage Rolls", "emoji": "🌭",
+    "tags": ["savory", "puff pastry", "sausage", "pork", "party", "appetizer", "british", "snack"],
+    "totalTime": "about 1 hour", "yield": "about 16 rolls",
+    "ingredients": [
+      { "name": "store-bought puff pastry (thawed)", "grams": 320 }, { "name": "sausage meat (pork)", "grams": 400 },
+      { "name": "grated onion", "grams": 40 }, { "name": "fresh breadcrumbs", "grams": 20 }, { "name": "dried thyme", "grams": 1 },
+      { "name": "egg wash: 1 egg beaten", "grams": 50 }
+    ],
+    "steps": [
+      { "title": "Mix the filling", "text": "Mix the sausage meat with the onion, breadcrumbs and thyme with your hands." },
+      { "title": "Fill and roll", "text": "Cut the pastry in half lengthwise. Pipe or shape the filling in a log along each strip, brush one edge with egg, and roll to seal with the seam underneath." },
+      { "title": "Cut and glaze", "text": "Cut each log into 8 pieces, place on a lined tray seam side down, brush with egg wash, and cut small slashes in the tops." },
+      { "title": "Bake", "text": "Bake until deep golden and cooked through, at least 71 °C inside.", "time": "25-30 min", "temp": "200 °C" }
+    ]
+  },
+  {
+    "id": "cheddar-biscuits", "name": "Cheddar Biscuits", "emoji": "🧈",
+    "tags": ["savory", "biscuit", "cheddar", "cheese", "buttermilk", "quick bread", "breakfast", "beginner", "garlic"],
+    "totalTime": "about 35 minutes", "yield": "8 biscuits",
+    "ingredients": [
+      { "name": "all-purpose flour", "grams": 300 }, { "name": "baking powder", "grams": 15 }, { "name": "salt", "grams": 5 },
+      { "name": "garlic powder", "grams": 3 }, { "name": "cold butter (cubed)", "grams": 100 }, { "name": "grated cheddar", "grams": 120 },
+      { "name": "cold milk or buttermilk", "grams": 190 }
+    ],
+    "steps": [
+      { "title": "Rub in the butter", "text": "Mix flour, baking powder, salt and garlic powder in the mixer with the paddle on low. Add the butter until pea-sized pieces remain." },
+      { "title": "Add cheese and milk", "text": "Add the cheese and then the milk and mix for about 10 seconds, just until a shaggy dough forms." },
+      { "title": "Shape", "text": "Pat to 3 cm thick, cut into 8 rounds or squares, and place close together on a lined tray." },
+      { "title": "Bake", "text": "Bake until tall and golden. Brush with melted butter.", "time": "12-15 min", "temp": "220 °C" }
+    ]
+  },
+  {
+    "id": "cheese-straws", "name": "Cheese Straws", "emoji": "🧀",
+    "tags": ["savory", "puff pastry", "cheese", "cheddar", "parmesan", "appetizer", "party", "quick", "few ingredients", "no mixer"],
+    "totalTime": "about 35 minutes", "yield": "about 24 straws",
+    "ingredients": [
+      { "name": "store-bought puff pastry (thawed)", "grams": 320 }, { "name": "grated cheddar or parmesan", "grams": 80 },
+      { "name": "Dijon mustard", "grams": 10 }, { "name": "smoked paprika", "grams": 2 }, { "name": "egg wash: 1 egg beaten", "grams": 50 }
+    ],
+    "steps": [
+      { "title": "Season", "text": "Unfold the pastry, spread thinly with mustard, and sprinkle with half the cheese and the paprika. Fold over and roll lightly to seal." },
+      { "title": "Cut and twist", "text": "Cut into 1.5 cm strips and twist each strip a few times. Place on a lined tray." },
+      { "title": "Glaze and bake", "text": "Brush with egg wash, top with the remaining cheese, and bake until golden and crisp.", "time": "12-15 min", "temp": "200 °C" }
+    ]
+  }
+]
