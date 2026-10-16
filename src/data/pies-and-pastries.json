@@ -1,0 +1,104 @@
+[
+  {
+    "id": "apple-pie", "name": "Classic Apple Pie", "emoji": "🥧",
+    "tags": ["pie", "apple", "cinnamon", "double crust", "autumn", "thanksgiving", "butter"],
+    "totalTime": "about 3 hours", "yield": "one 23 cm pie",
+    "ingredients": [
+      { "name": "crust: all-purpose flour", "grams": 300 }, { "name": "crust: cold butter (cubed)", "grams": 200 },
+      { "name": "crust: sugar", "grams": 10 }, { "name": "crust: salt", "grams": 5 }, { "name": "crust: ice water", "grams": 90 },
+      { "name": "filling: apples (peeled and sliced)", "grams": 900 }, { "name": "filling: sugar", "grams": 100 },
+      { "name": "filling: cornstarch", "grams": 20 }, { "name": "filling: cinnamon", "grams": 4 }, { "name": "filling: lemon juice", "grams": 15 },
+      { "name": "butter (for dotting)", "grams": 20 }, { "name": "egg wash: 1 egg beaten with a splash of milk", "grams": 55 }
+    ],
+    "steps": [
+      { "title": "Make the dough", "text": "Mix flour, sugar, salt and butter in the mixer with the paddle on low until pea-sized pieces remain. Add the ice water and mix just until it clumps." },
+      { "title": "Chill", "text": "Divide in two discs, wrap, and chill.", "time": "1 hour" },
+      { "title": "Prepare the filling", "text": "Toss apples with sugar, cornstarch, cinnamon and lemon juice." },
+      { "title": "Assemble", "text": "Roll out one disc and line a 23 cm pie dish. Add the filling and dot with butter. Roll the second disc, cover the pie, crimp the edges, cut vents, and brush with egg wash." },
+      { "title": "Bake", "text": "Bake hot for 20 minutes, then lower the heat and bake until golden and the juices bubble. Cool for at least 2 hours before slicing.", "time": "20 min, then 40 min", "temp": "200 °C, then 175 °C" }
+    ]
+  },
+  {
+    "id": "pecan-pie", "name": "Pecan Pie", "emoji": "🥜",
+    "tags": ["pie", "pecan", "nut", "brown sugar", "thanksgiving", "holiday", "southern", "butter"],
+    "totalTime": "about 3 hours", "yield": "one 23 cm pie",
+    "ingredients": [
+      { "name": "crust: all-purpose flour", "grams": 200 }, { "name": "crust: cold butter (cubed)", "grams": 130 },
+      { "name": "crust: sugar", "grams": 5 }, { "name": "crust: salt", "grams": 3 }, { "name": "crust: ice water", "grams": 50 },
+      { "name": "filling: pecans", "grams": 200 }, { "name": "filling: brown sugar", "grams": 150 },
+      { "name": "filling: corn syrup or maple syrup", "grams": 175 }, { "name": "filling: eggs", "grams": 150 },
+      { "name": "filling: butter (melted)", "grams": 60 }, { "name": "filling: vanilla extract", "grams": 8 }, { "name": "filling: salt", "grams": 3 }
+    ],
+    "steps": [
+      { "title": "Make and chill the dough", "text": "Mix crust ingredients in the mixer with the paddle until pea-sized pieces remain, add the ice water until it clumps, form a disc, and chill.", "time": "1 hour" },
+      { "title": "Blind bake", "text": "Roll out and fit into a 23 cm pie dish. Line with parchment and weights and bake, then remove the weights and bake 5 minutes more.", "time": "15 min + 5 min", "temp": "190 °C" },
+      { "title": "Mix the filling", "text": "Whisk eggs, brown sugar, syrup, melted butter, vanilla and salt. Stir in the pecans." },
+      { "title": "Fill and bake", "text": "Pour into the crust and bake until the edges are set and the center has a slight jiggle. Cool completely so it sets.", "time": "50-55 min", "temp": "175 °C" }
+    ]
+  },
+  {
+    "id": "hong-kong-egg-tarts", "name": "Hong Kong Egg Tarts", "emoji": "🥚",
+    "tags": ["tart", "egg tart", "custard", "chinese", "hong kong", "dim sum", "pastry", "small"],
+    "totalTime": "about 2 hours", "yield": "12 tarts",
+    "ingredients": [
+      { "name": "crust: all-purpose flour", "grams": 220 }, { "name": "crust: cold butter (cubed)", "grams": 110 },
+      { "name": "crust: powdered sugar", "grams": 40 }, { "name": "crust: egg yolk", "grams": 20 }, { "name": "crust: cold water", "grams": 20 },
+      { "name": "custard: eggs", "grams": 100 }, { "name": "custard: sugar", "grams": 50 }, { "name": "custard: hot water", "grams": 120 },
+      { "name": "custard: milk", "grams": 60 }, { "name": "custard: vanilla extract", "grams": 3 }
+    ],
+    "steps": [
+      { "title": "Make the dough", "text": "Mix flour, powdered sugar and butter with the paddle on low until sandy, add yolk and water, and mix until it comes together. Chill.", "time": "45 min" },
+      { "title": "Line the molds", "text": "Press 30 g of dough into each hole of a 12-cup muffin tin or tart molds, building up the sides evenly." },
+      { "title": "Make the custard", "text": "Dissolve the sugar in the hot water and cool for a few minutes. Whisk in eggs, milk and vanilla, then strain for a smooth custard." },
+      { "title": "Fill and bake", "text": "Fill each shell about 80 percent full. Bake hot for 10 minutes, then lower the heat until the custard is set and just wobbles.", "time": "10 min, then 10-12 min", "temp": "200 °C, then 170 °C" }
+    ]
+  },
+  {
+    "id": "apple-turnovers", "name": "Apple Turnovers", "emoji": "🍎",
+    "tags": ["puff pastry", "apple", "cinnamon", "turnover", "pastry", "breakfast", "no mixer", "quick"],
+    "totalTime": "about 50 minutes", "yield": "6 turnovers",
+    "ingredients": [
+      { "name": "store-bought puff pastry (thawed)", "grams": 320 }, { "name": "apples (peeled and diced)", "grams": 300 },
+      { "name": "sugar", "grams": 40 }, { "name": "cinnamon", "grams": 3 }, { "name": "lemon juice", "grams": 10 },
+      { "name": "cornstarch", "grams": 5 }, { "name": "egg wash: 1 egg beaten", "grams": 50 }
+    ],
+    "steps": [
+      { "title": "Cook the filling", "text": "Simmer the apples with sugar, cinnamon, lemon juice and cornstarch for 6 to 8 minutes until tender and thick. Cool completely." },
+      { "title": "Cut and fill", "text": "Cut the pastry into 6 squares. Spoon filling onto one half of each, brush the edges with egg, and fold into triangles." },
+      { "title": "Seal", "text": "Press the edges with a fork, brush the tops with egg wash, and cut small steam vents." },
+      { "title": "Bake", "text": "Bake until puffed and deep golden.", "time": "20-25 min", "temp": "200 °C" }
+    ]
+  },
+  {
+    "id": "easy-chocolate-croissants", "name": "Easy Pain au Chocolat (Puff Pastry)", "emoji": "🥐",
+    "tags": ["puff pastry", "chocolate", "croissant", "pastry", "french", "breakfast", "few ingredients", "quick", "no mixer"],
+    "totalTime": "about 40 minutes", "yield": "6 pastries",
+    "ingredients": [
+      { "name": "store-bought puff pastry (thawed)", "grams": 320 }, { "name": "dark chocolate bars or batons", "grams": 80 },
+      { "name": "egg wash: 1 egg beaten with a splash of milk", "grams": 55 }
+    ],
+    "steps": [
+      { "title": "Cut", "text": "Unfold the pastry and cut into 6 rectangles." },
+      { "title": "Fill and roll", "text": "Place a line of chocolate near one short edge of each rectangle, roll up once, add another line of chocolate, and roll to the end. Place seam side down on a lined tray." },
+      { "title": "Glaze and bake", "text": "Brush with egg wash and bake until deep golden and puffed.", "time": "18-20 min", "temp": "200 °C" }
+    ]
+  },
+  {
+    "id": "fruit-tart-pastry-cream", "name": "Fresh Fruit Tart", "emoji": "🍓",
+    "tags": ["tart", "pastry cream", "fruit", "strawberry", "berries", "french", "custard", "impressive"],
+    "totalTime": "about 3 hours", "yield": "one 23 cm tart",
+    "ingredients": [
+      { "name": "crust: all-purpose flour", "grams": 200 }, { "name": "crust: cold butter (cubed)", "grams": 100 },
+      { "name": "crust: powdered sugar", "grams": 70 }, { "name": "crust: egg yolk", "grams": 20 }, { "name": "crust: cold water", "grams": 15 },
+      { "name": "cream: milk", "grams": 300 }, { "name": "cream: sugar", "grams": 70 }, { "name": "cream: egg yolks", "grams": 60 },
+      { "name": "cream: cornstarch", "grams": 25 }, { "name": "cream: butter", "grams": 20 }, { "name": "cream: vanilla extract", "grams": 8 },
+      { "name": "mixed berries and sliced fruit", "grams": 300 }, { "name": "apricot jam (for glaze)", "grams": 40 }
+    ],
+    "steps": [
+      { "title": "Make and bake the shell", "text": "Mix crust ingredients with the paddle until the dough comes together, chill 1 hour, then roll into a 23 cm tart pan. Blind bake with weights, remove them, and bake until golden.", "time": "1 hour chill, then 20 min", "temp": "180 °C" },
+      { "title": "Cook the pastry cream", "text": "Heat the milk until steaming. Whisk sugar, yolks and cornstarch, pour in the milk, return to the pot, and whisk over medium heat until thick and bubbling. Off the heat, stir in butter and vanilla." },
+      { "title": "Chill the cream", "text": "Press plastic wrap onto the surface and chill until cold.", "time": "2 hours" },
+      { "title": "Assemble", "text": "Spread the cream into the cooled shell, arrange the fruit, and brush with warmed, strained apricot jam." }
+    ]
+  }
+]
