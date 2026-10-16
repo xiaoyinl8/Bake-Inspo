@@ -1,0 +1,91 @@
+[
+  {
+    "id": "pistachio-bread",
+    "name": "Pistachio Bread",
+    "emoji": "🍞",
+    "tags": ["bread", "pistachio", "yeast", "loaf"],
+    "totalTime": "about 4 hours",
+    "yield": "1 loaf",
+    "ingredients": [
+      { "name": "bread flour", "grams": 500 },
+      { "name": "water", "grams": 330 },
+      { "name": "sugar", "grams": 50 },
+      { "name": "instant yeast", "grams": 7 },
+      { "name": "salt", "grams": 9 },
+      { "name": "butter", "grams": 40 },
+      { "name": "pistachios (roughly chopped)", "grams": 120 }
+    ],
+    "steps": [
+      {
+        "title": "Mix the dough",
+        "text": "Add flour, water, sugar, yeast and salt to the stand mixer bowl. Mix with the dough hook on low speed for 5 minutes, until no dry flour is left.",
+        "image": "images/pistachio-bread/step1.png"
+      },
+      {
+        "title": "Knead with butter",
+        "text": "Add the soft butter. Knead on medium speed for 6 to 8 minutes, until the dough is smooth and passes the windowpane test. Mix in the pistachios on low for 30 seconds.",
+        "image": "images/pistachio-bread/step2.png"
+      },
+      {
+        "title": "Ferment",
+        "text": "Cover the bowl and leave it in a warm spot until doubled in size.",
+        "time": "60-90 min",
+        "temp": "26-28 °C",
+        "image": "images/pistachio-bread/step3.png"
+      },
+      {
+        "title": "Shape and proof",
+        "text": "Press out the air, shape into a tight loaf, and place it in a greased loaf pan. Cover and proof until the dough rises about 2 cm above the rim.",
+        "time": "45 min",
+        "image": "images/pistachio-bread/step4.png"
+      },
+      {
+        "title": "Bake",
+        "text": "Bake on the middle rack until deep golden. Cool on a rack for at least 30 minutes before slicing.",
+        "time": "30-35 min",
+        "temp": "190 °C",
+        "image": "images/pistachio-bread/step5.png"
+      }
+    ]
+  },
+  {
+    "id": "pistachio-shortbread",
+    "name": "Pistachio Shortbread",
+    "emoji": "🍪",
+    "tags": ["cookie", "pistachio", "butter", "shortbread"],
+    "totalTime": "about 1 hour 15 minutes",
+    "yield": "about 24 cookies",
+    "ingredients": [
+      { "name": "butter (soft)", "grams": 170 },
+      { "name": "powdered sugar", "grams": 60 },
+      { "name": "all-purpose flour", "grams": 220 },
+      { "name": "pistachios (finely chopped)", "grams": 80 },
+      { "name": "salt", "grams": 2 }
+    ],
+    "steps": [
+      {
+        "title": "Cream the butter",
+        "text": "Beat butter and powdered sugar with the paddle attachment on medium speed for 2 minutes, until pale and fluffy.",
+        "image": "images/pistachio-shortbread/step1.png"
+      },
+      {
+        "title": "Add flour and nuts",
+        "text": "Add flour, salt and pistachios. Mix on low just until a dough forms. Stop as soon as it comes together to keep the cookies tender.",
+        "image": "images/pistachio-shortbread/step2.png"
+      },
+      {
+        "title": "Shape and chill",
+        "text": "Roll into a log about 4 cm wide, wrap it, and chill until firm.",
+        "time": "30-45 min",
+        "image": "images/pistachio-shortbread/step3.png"
+      },
+      {
+        "title": "Slice and bake",
+        "text": "Slice into 1 cm rounds and place on a lined tray. Bake until the edges are just golden.",
+        "time": "15-18 min",
+        "temp": "170 °C",
+        "image": "images/pistachio-shortbread/step4.png"
+      }
+    ]
+  }
+]
