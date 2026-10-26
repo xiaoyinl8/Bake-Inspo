@@ -107,3 +107,24 @@ h1, h2, h3, h4 { font-family: "Fredoka", "Nunito", sans-serif; font-weight: 600;
 @media (max-width: 640px) {
   .step { grid-template-columns: 1fr; }
 }
+
+.crumbs {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0 0 20px;
+  color: var(--muted);
+}
+.crumbs button {
+  font: inherit;
+  font-weight: 700;
+  color: var(--berry);
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  text-decoration: underline;
+}
+.crumbs button:focus-visible { outline: 3px solid var(--butter); outline-offset: 2px; }
+.crumbs strong { color: var(--ink); }
