@@ -357,7 +357,6 @@ function RecipePage({ recipe, fahrenheit, cups, saved, onSave, inList, onToggleL
         </ul>
       </section>
 
-      /* --- modified --- */
       {subs.length > 0 && (
         <section className="subs">
           <h3>Out of something?</h3>
