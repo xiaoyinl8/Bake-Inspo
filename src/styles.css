@@ -207,3 +207,59 @@ body {
   .no-print, .cook { display: none !important; }
   .recipe { padding: 0; box-shadow: none; }
 }
+
+/* warm grid-paper theme */
+:root {
+  --bg: #fbefdd; --surface: #fff9ef; --ink: #2b160c; --muted: #7a5a45;
+  --pistachio: #e0a862; --butter: #f0c24b; --berry: #c2610f; --grid: #f3dcc3;
+}
+:root[data-theme="dark"] {
+  --bg: #231811; --surface: #33241a; --ink: #f7ead8; --muted: #c9ad94;
+  --pistachio: #c58f4e; --butter: #d9a93a; --berry: #f0a35a; --grid: #2e2017;
+}
+
+body {
+  font-family: "Manrope", "Nunito", system-ui, sans-serif;
+  background-color: var(--bg);
+  background-image:
+    linear-gradient(var(--grid) 2px, transparent 2px),
+    linear-gradient(90deg, var(--grid) 2px, transparent 2px);
+  background-size: 56px 56px;
+  background-position: -1px -1px;
+}
+
+main { position: relative; z-index: 1; }
+
+.hero h1, .recipe h2, .cook h2 {
+  font-family: "Kaushan Script", "Fredoka", cursive;
+  font-weight: 400;
+  color: var(--ink);
+}
+.hero h1 { font-size: clamp(3rem, 9vw, 5.5rem); }
+
+/* decorations */
+.decor { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+.decor .art, .decor .star, .decor .dot { position: absolute; }
+.star path { fill: var(--butter); }
+.dot { border-radius: 50%; background: var(--butter); }
+
+.spatula { top: 18px; right: -30px; width: 280px; transform: rotate(-4deg); }
+.spoon   { bottom: -10px; left: -40px; width: 420px; transform: rotate(-3deg); }
+.cake-a  { top: 150px; left: -20px; width: 170px; transform: rotate(-12deg); }
+.cake-b  { bottom: 10px; right: -10px; width: 190px; transform: rotate(8deg); }
+
+.s1 { top: 70px; left: 24%; width: 44px; }
+.s2 { top: 140px; left: 30%; width: 26px; }
+.s3 { top: 38%; right: 8%; width: 50px; }
+.s4 { bottom: 20%; left: 12%; width: 46px; }
+.s5 { bottom: 30%; right: 18%; width: 32px; }
+.t1 { top: 90px; left: 18%; width: 12px; height: 12px; }
+.t2 { top: 52%; right: 4%; width: 14px; height: 14px; }
+.t3 { bottom: 12%; left: 34%; width: 12px; height: 12px; }
+
+@media (max-width: 900px) {
+  .spatula, .spoon, .cake-a { display: none; }
+  .cake-b { width: 110px; opacity: 0.5; }
+  .star { opacity: 0.6; }
+}
+@media print { .decor { display: none !important; } }
