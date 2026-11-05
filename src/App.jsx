@@ -534,6 +534,8 @@ export default function App() {
   }
 
   return (
+    <>
+    <Decor />
     <main>
       <nav className="topbar no-print" aria-label="Main">
         <button aria-current={view === "browse" ? "page" : undefined} onClick={() => go("browse")}>Browse</button>
@@ -566,5 +568,6 @@ export default function App() {
 
       {content}
     </main>
+    </>
   );
 }
