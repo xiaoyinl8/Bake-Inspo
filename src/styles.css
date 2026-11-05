@@ -263,3 +263,10 @@ main { position: relative; z-index: 1; }
   .star { opacity: 0.6; }
 }
 @media print { .decor { display: none !important; } }
+
+.note { margin: -6px 0 18px; font-size: 0.9rem; color: var(--muted); }
+.subs { margin-top: 24px; padding: 4px 18px 8px; background: var(--bg); border-radius: 16px; }
+.subs li { margin: 6px 0; }
+.season { margin-top: 36px; }
+.season-title { font-size: 1.6rem; margin: 0 0 14px; }
+.checklist input:checked + span { text-decoration: line-through; opacity: 0.55; }
