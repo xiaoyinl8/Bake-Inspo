@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { CATEGORIES } from "./categories.js";
+import { DIET_FILTERS, fmtAmount, substitutionsFor, seasonName, seasonalRecipes, suggestRecipes, combine } from "./extras.js";
 
 // Change this to your repo's issues page (or a mailto: link) so visitors can report wrong amounts
 const FEEDBACK_URL = "https://github.com/xiaoyinl8/Bake-Inspo/issues/new";
@@ -64,6 +65,7 @@ const FILTERS = {
   Beginner: (r) => r.tags.includes("beginner"),
   "No yeast": (r) => !r.ingredients.some((i) => /yeast/i.test(i.name)),
   "Few ingredients": (r) => r.ingredients.length <= 6,
+  ...DIET_FILTERS,
 };
 
 // Pantry items: label shown to the user + pattern matched against ingredient names
@@ -142,13 +144,20 @@ function RecipeCard({ r, cardProps }) {
 
 function FilterBar({ active, onToggle }) {
   return (
-    <div className="filters no-print" role="group" aria-label="Filters">
-      {Object.keys(FILTERS).map((f) => (
-        <button key={f} className="pill" aria-pressed={active.includes(f)} onClick={() => onToggle(f)}>
-          {f}
-        </button>
-      ))}
-    </div>
+    <>
+      <div className="filters no-print" role="group" aria-label="Filters">
+        {Object.keys(FILTERS).map((f) => (
+          <button key={f} className="pill" aria-pressed={active.includes(f)} onClick={() => onToggle(f)}>
+            {f}
+          </button>
+        ))}
+      </div>
+      {active.some((f) => f in DIET_FILTERS) && (
+        <p className="note no-print">
+          Dietary filters only read the ingredient lists. Always check packaging labels yourself, especially for allergies.
+        </p>
+      )}
+    </>
   );
 }
 
@@ -298,7 +307,8 @@ function CookMode({ recipe, fahrenheit, onExit }) {
 }
 
 /* ---------- recipe page ---------- */
-function RecipePage({ recipe, fahrenheit, saved, onSave, onBack }) {
+function RecipePage({ recipe, fahrenheit, cups, saved, onSave, inList, onToggleList, onBack }) {
+  const subs = substitutionsFor(recipe);
   const [mult, setMult] = useState(1);
   const [done, setDone] = useState([]);
   const [cooking, setCooking] = useState(false);
@@ -319,6 +329,9 @@ function RecipePage({ recipe, fahrenheit, saved, onSave, onBack }) {
         <button className="pill" aria-pressed={saved} onClick={() => onSave(recipe.id)}>{saved ? "♥ Saved" : "♡ Save"}</button>
         <button className="pill" onClick={copy}>{copied ? "Link copied!" : "Copy link"}</button>
         <button className="pill" onClick={() => window.print()}>Print</button>
+        <button className="pill" aria-pressed={inList} onClick={() => onToggleList(recipe.id)}>
+          {inList ? "✓ On shopping list" : "+ Shopping list"}
+        </button>
         <button className="surprise" onClick={() => setCooking(true)}>Start cooking</button>
       </div>
 
@@ -337,13 +350,21 @@ function RecipePage({ recipe, fahrenheit, saved, onSave, onBack }) {
             <li key={n} className={done.includes(n) ? "done" : ""}>
               <label>
                 <input type="checkbox" checked={done.includes(n)} onChange={() => tick(n)} />
-                <span><strong>{Math.round(ing.grams * mult * 10) / 10} g</strong> {ing.name}</span>
+                <span><strong>{fmtAmount(ing.grams * mult, ing.name, cups)}</strong> {ing.name}</span>
               </label>
             </li>
           ))}
         </ul>
       </section>
 
+      /* --- modified --- */
+      {subs.length > 0 && (
+        <section className="subs">
+          <h3>Out of something?</h3>
+          <ul>{subs.map((s, i) => <li key={i}>{s}</li>)}</ul>
+        </section>
+      )}
+      
       <section>
         <h3>Steps</h3>
         <ol className="steps">
@@ -423,6 +444,93 @@ function Decor() {
   );
 }
 
+function Moved({ id, cardProps, onHome }) {
+  const similar = suggestRecipes(id.replace(/-/g, " "), recipes);
+  return (
+    <article className="recipe">
+      <h2>That recipe has moved</h2>
+      <p>We couldn't find a recipe called "{id.replace(/-/g, " ")}". It may have been renamed or removed.</p>
+      <button className="surprise" onClick={onHome}>Browse all recipes</button>
+      {similar.length > 0 && (
+        <>
+          <h3>Maybe you meant</h3>
+          <RecipeGrid list={similar} active={[]} cardProps={cardProps} />
+        </>
+      )}
+    </article>
+  );
+}
+
+function NoMatch({ query, cardProps, onPickCat }) {
+  const similar = suggestRecipes(query, recipes);
+  return (
+    <>
+      <p className="empty">Nothing matches "{query}" yet.{similar.length > 0 ? " Did you mean one of these?" : ""}</p>
+      {similar.length > 0 && <RecipeGrid list={similar} active={[]} cardProps={cardProps} />}
+      <p className="empty">Or browse a category:</p>
+      <div className="filters" style={{ justifyContent: "center" }}>
+        {categories.map((c) => (
+          <button key={c.id} className="pill" onClick={() => onPickCat(c)}>{c.emoji} {c.name}</button>
+        ))}
+      </div>
+    </>
+  );
+}
+
+function SeasonRow({ cardProps }) {
+  const list = useMemo(() => seasonalRecipes(recipes), []);
+  if (list.length === 0) return null;
+  return (
+    <section className="season">
+      <h2 className="season-title">In season: {seasonName()}</h2>
+      <RecipeGrid list={list} active={[]} cardProps={cardProps} />
+    </section>
+  );
+}
+
+function ShoppingList({ cart, cups, onRemove, onClear }) {
+  const [copied, setCopied] = useState(false);
+  const picked = cart.map((id) => byId[id]).filter(Boolean);
+  const items = combine(picked);
+  if (picked.length === 0) {
+    return <p className="empty">Your list is empty. Open a recipe and tap "+ Shopping list".</p>;
+  }
+  const copy = async () => {
+    const text = items.map((i) => `${fmtAmount(i.grams, i.name, cups)} ${i.name}`).join("\n");
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1500);
+    } catch { /* ignore */ }
+  };
+  return (
+    <article className="recipe">
+      <h2>Shopping list</h2>
+      <div className="filters no-print">
+        {picked.map((r) => (
+          <button key={r.id} className="pill" onClick={() => onRemove(r.id)} aria-label={`Remove ${r.name}`}>
+            {r.emoji} {r.name} ✕
+          </button>
+        ))}
+      </div>
+      <ul className="checklist">
+        {items.map((i) => (
+          <li key={i.name}>
+            <label>
+              <input type="checkbox" />
+              <span><strong>{fmtAmount(i.grams, i.name, cups)}</strong> {i.name}</span>
+            </label>
+          </li>
+        ))}
+      </ul>
+      <div className="actions no-print">
+        <button className="pill" onClick={copy}>{copied ? "Copied!" : "Copy list"}</button>
+        <button className="pill" onClick={() => picked.forEach((r) => onRemove(r.id))}>Clear all</button>
+      </div>
+    </article>
+  );
+}
+
 /* ---------- app ---------- */
 export default function App() {
   const [view, setView] = useState("browse");
@@ -430,9 +538,12 @@ export default function App() {
   const [cat, setCat] = useState(null);
   const [sub, setSub] = useState(null);
   const [selected, setSelected] = useState(null);
+  const [missingId, setMissingId] = useState(null);
   const [active, setActive] = useState([]);
   const [have, setHave] = useState([]);
   const [saved, setSaved] = useStored("saved", []);
+  const [cart, setCart] = useStored("cart", []);
+  const [cups, setCups] = useStored("cups", false);
   const [fahrenheit, setFahrenheit] = useStored("fahrenheit", false);
   const [theme, setTheme] = useStored(
     "theme",
@@ -442,11 +553,13 @@ export default function App() {
   useEffect(() => { document.documentElement.dataset.theme = theme; }, [theme]);
   useEffect(() => { document.title = selected ? `${selected.name} · Bake Inspo` : "Bake Inspo"; }, [selected]);
 
-  // Shareable links: #/r/<recipe-id>
+  // Shareable links: #/r/<recipe-id>, with a friendly message if the id no longer exists
   useEffect(() => {
     const read = () => {
       const m = /^#\/r\/(.+)$/.exec(location.hash);
-      setSelected(m ? byId[decodeURIComponent(m[1])] ?? null : null);
+      const id = m ? decodeURIComponent(m[1]) : null;
+      setSelected(id ? byId[id] ?? null : null);
+      setMissingId(id && !byId[id] ? id : null);
     };
     read();
     window.addEventListener("hashchange", read);
@@ -457,8 +570,10 @@ export default function App() {
   const closeRecipe = () => {
     if (location.hash) history.replaceState(null, "", location.pathname + location.search);
     setSelected(null);
+    setMissingId(null);
   };
   const toggleSave = (id) => setSaved(saved.includes(id) ? saved.filter((x) => x !== id) : [...saved, id]);
+  const toggleCart = (id) => setCart(cart.includes(id) ? cart.filter((x) => x !== id) : [...cart, id]);
   const toggleFilter = (f) => setActive(active.includes(f) ? active.filter((x) => x !== f) : [...active, f]);
   const go = (v) => { setView(v); setCat(null); setSub(null); setQuery(""); closeRecipe(); };
   const goHome = () => { setCat(null); setSub(null); };
@@ -474,13 +589,20 @@ export default function App() {
         key={selected.id}
         recipe={selected}
         fahrenheit={fahrenheit}
+        cups={cups}
         saved={saved.includes(selected.id)}
         onSave={toggleSave}
+        inList={cart.includes(selected.id)}
+        onToggleList={toggleCart}
         onBack={closeRecipe}
       />
     );
+  } else if (missingId) {
+    content = <Moved id={missingId} cardProps={cardProps} onHome={() => go("browse")} />;
   } else if (view === "about") {
     content = <About />;
+  } else if (view === "list") {
+    content = <ShoppingList cart={cart} cups={cups} onRemove={toggleCart} />;
   } else if (view === "pantry") {
     content = <Pantry have={have} setHave={setHave} cardProps={cardProps} />;
   } else if (view === "saved") {
@@ -500,7 +622,7 @@ export default function App() {
         <RecipeGrid list={results} active={active} cardProps={cardProps} />
       </>
     ) : (
-      <p className="empty">Nothing matches "{query}" yet. Try a single ingredient like "chocolate" or "lemon".</p>
+      <NoMatch query={query} cardProps={cardProps} onPickCat={(c) => { setQuery(""); setCat(c); }} />
     );
   } else if (cat && sub) {
     content = (
@@ -525,49 +647,54 @@ export default function App() {
     );
   } else {
     content = (
-      <section className="grid">
-        {categories.map((c) => (
-          <Tile key={c.id} emoji={c.emoji} name={c.name} meta={`${c.count} recipes`} onClick={() => setCat(c)} />
-        ))}
-      </section>
+      <>
+        <section className="grid">
+          {categories.map((c) => (
+            <Tile key={c.id} emoji={c.emoji} name={c.name} meta={`${c.count} recipes`} onClick={() => setCat(c)} />
+          ))}
+        </section>
+        <SeasonRow cardProps={cardProps} />
+      </>
     );
   }
 
   return (
     <>
-    <Decor />
-    <main>
-      <nav className="topbar no-print" aria-label="Main">
-        <button aria-current={view === "browse" ? "page" : undefined} onClick={() => go("browse")}>Browse</button>
-        <button aria-current={view === "pantry" ? "page" : undefined} onClick={() => go("pantry")}>Pantry</button>
-        <button aria-current={view === "saved" ? "page" : undefined} onClick={() => go("saved")}>Saved{saved.length ? ` (${saved.length})` : ""}</button>
-        <button aria-current={view === "about" ? "page" : undefined} onClick={() => go("about")}>About</button>
-        <span className="spacer" />
-        <button onClick={() => setFahrenheit(!fahrenheit)} aria-label="Toggle temperature unit">°{fahrenheit ? "F" : "C"}</button>
-        <button onClick={() => setTheme(theme === "dark" ? "light" : "dark")} aria-label="Toggle dark mode">
-          {theme === "dark" ? "☀️" : "🌙"}
-        </button>
-      </nav>
+      <Decor />
+      <main>
+        <nav className="topbar no-print" aria-label="Main">
+          <button aria-current={view === "browse" ? "page" : undefined} onClick={() => go("browse")}>Browse</button>
+          <button aria-current={view === "pantry" ? "page" : undefined} onClick={() => go("pantry")}>Pantry</button>
+          <button aria-current={view === "saved" ? "page" : undefined} onClick={() => go("saved")}>Saved{saved.length ? ` (${saved.length})` : ""}</button>
+          <button aria-current={view === "list" ? "page" : undefined} onClick={() => go("list")}>List{cart.length ? ` (${cart.length})` : ""}</button>
+          <button aria-current={view === "about" ? "page" : undefined} onClick={() => go("about")}>About</button>
+          <span className="spacer" />
+          <button onClick={() => setCups(!cups)} aria-label="Toggle grams or cups">{cups ? "Cups" : "Grams"}</button>
+          <button onClick={() => setFahrenheit(!fahrenheit)} aria-label="Toggle temperature unit">°{fahrenheit ? "F" : "C"}</button>
+          <button onClick={() => setTheme(theme === "dark" ? "light" : "dark")} aria-label="Toggle dark mode">
+            {theme === "dark" ? "☀️" : "🌙"}
+          </button>
+        </nav>
 
-      <header className="hero no-print">
-        <h1>Bake Inspo</h1>
-        {view === "browse" && !selected && (
-          <>
-            <p>Out of ideas? Pick a category, or type what's in your pantry.</p>
-            <input
-              type="search"
-              className="search"
-              placeholder="Search by ingredient: lemon, banana, chocolate"
-              value={query}
-              onChange={(e) => { setQuery(e.target.value); if (selected) closeRecipe(); }}
-              aria-label="Search recipes by ingredient"
-            />
-          </>
-        )}
-      </header>
+        <header className="hero no-print">
+          <h1>Bake Inspo</h1>
+          {view === "browse" && !selected && !missingId && (
+            <>
+              <p>Out of ideas? Pick a category, or type what's in your pantry.</p>
+              <input
+                type="search"
+                className="search"
+                placeholder="Search by ingredient: lemon, banana, chocolate"
+                value={query}
+                onChange={(e) => { setQuery(e.target.value); if (selected) closeRecipe(); }}
+                aria-label="Search recipes by ingredient"
+              />
+            </>
+          )}
+        </header>
 
-      {content}
-    </main>
+        {content}
+      </main>
     </>
   );
 }
