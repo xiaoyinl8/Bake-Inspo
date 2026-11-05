@@ -382,6 +382,47 @@ function About() {
   );
 }
 
+const Star = ({ className }) => (
+  <svg className={`star ${className}`} viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M12 0C13 7 17 11 24 12 17 13 13 17 12 24 11 17 7 13 0 12 7 11 11 7 12 0Z" />
+  </svg>
+);
+
+const CakeSlice = ({ className }) => (
+  <svg className={`art ${className}`} viewBox="0 0 180 130" aria-hidden="true">
+    <path d="M10 70Q20 20 95 14 165 10 172 60V110Q172 118 164 118H18Q10 118 10 110Z" fill="#f6c98d" />
+    <path d="M10 70Q20 20 95 14 165 10 172 60 100 52 10 70Z" fill="#f0a24a" />
+    <rect x="22" y="72" width="140" height="16" rx="8" fill="#4a2a1c" />
+    <rect x="22" y="96" width="140" height="14" rx="7" fill="#4a2a1c" />
+    <g fill="#4a2a1c">
+      <circle cx="60" cy="34" r="5" /><circle cx="90" cy="28" r="5" />
+      <circle cx="120" cy="32" r="5" /><circle cx="145" cy="44" r="5" />
+    </g>
+  </svg>
+);
+
+function Decor() {
+  return (
+    <div className="decor no-print" aria-hidden="true">
+      <Star className="s1" /><Star className="s2" /><Star className="s3" />
+      <Star className="s4" /><Star className="s5" />
+      <span className="dot t1" /><span className="dot t2" /><span className="dot t3" />
+      <svg className="art spatula" viewBox="0 0 320 110">
+        <rect x="110" y="44" width="200" height="22" rx="11" fill="#c98a4b" />
+        <rect x="8" y="10" width="150" height="90" rx="30" fill="#f1ddb0" />
+        <rect x="26" y="28" width="98" height="54" rx="22" fill="#f8ebcb" />
+      </svg>
+      <svg className="art spoon" viewBox="0 0 440 120">
+        <rect x="8" y="52" width="270" height="18" rx="9" fill="#c98a4b" />
+        <ellipse cx="350" cy="61" rx="82" ry="52" fill="#d4924f" />
+        <ellipse cx="350" cy="61" rx="62" ry="36" fill="#e0a465" />
+      </svg>
+      <CakeSlice className="cake-a" />
+      <CakeSlice className="cake-b" />
+    </div>
+  );
+}
+
 /* ---------- app ---------- */
 export default function App() {
   const [view, setView] = useState("browse");
