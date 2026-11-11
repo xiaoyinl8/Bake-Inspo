@@ -276,3 +276,98 @@ main { position: relative; z-index: 1; }
 .grid.big .card { padding: 44px 20px; }
 .grid.big .card-emoji { font-size: 5rem; }
 .grid.big .card-name { font-size: 1.9rem; }
+
+/* ===== sticky top bar + mobile menu ===== */
+.topbar {
+  position: sticky; top: 0; z-index: 20;
+  margin: 0 -20px 8px; padding: 8px 20px;
+  background: color-mix(in srgb, var(--bg) 90%, transparent);
+  backdrop-filter: blur(8px);
+}
+.links, .toggles { display: flex; flex-wrap: wrap; gap: 6px; }
+.toggles { margin-left: auto; }
+.menu-btn { display: none; }
+@media (max-width: 700px) {
+  .menu-btn { display: inline-flex; align-items: center; }
+  .links, .toggles { display: none; }
+  .topbar.open .links, .topbar.open .toggles { display: flex; width: 100%; margin-left: 0; }
+}
+
+/* ===== icons ===== */
+.icon { display: block; }
+.card-icon { width: 64px; height: 64px; }
+.grid.big .card-icon { width: 110px; height: 110px; }
+.mini { display: inline-block; width: 1.3em; height: 1.3em; margin-right: 6px; vertical-align: -0.3em; }
+
+/* ===== tinted category tiles ===== */
+.card.tint-0 { background: #fde3c8; border-color: #e9b98a; }
+.card.tint-1 { background: #fbefb5; border-color: #e5cd6a; }
+.card.tint-2 { background: #fad7d3; border-color: #e8a59f; }
+.card.tint-3 { background: #e9edc6; border-color: #b9c97f; }
+.card.tint-4 { background: #f4dfc4; border-color: #d9b283; }
+.card.tint-5 { background: #f6d9e4; border-color: #dba5bb; }
+:root[data-theme="dark"] .card.tint-0 { background: #4a3322; border-color: #8a6238; }
+:root[data-theme="dark"] .card.tint-1 { background: #4a4122; border-color: #8a7a38; }
+:root[data-theme="dark"] .card.tint-2 { background: #4a2a28; border-color: #8a4f4a; }
+:root[data-theme="dark"] .card.tint-3 { background: #373d22; border-color: #6d7d3c; }
+:root[data-theme="dark"] .card.tint-4 { background: #45362a; border-color: #85673f; }
+:root[data-theme="dark"] .card.tint-5 { background: #46293a; border-color: #85506d; }
+.card[class*="tint-"]:hover { transform: translateY(-2px); }
+
+.grid.big { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+.grid.big .card { padding: 44px 20px; }
+.grid.big .card-name { font-size: 1.9rem; }
+.crumb { display: inline-flex; align-items: center; gap: 8px; }
+
+/* ===== today's bake, leftovers ===== */
+.today {
+  display: flex; align-items: center; gap: 18px; width: 100%;
+  margin-top: 28px; padding: 16px 22px;
+  font: inherit; color: inherit; text-align: left;
+  background: var(--surface); border: 2px dashed var(--pistachio);
+  border-radius: var(--radius); cursor: pointer;
+}
+.today:focus-visible { outline: 3px solid var(--berry); outline-offset: 2px; }
+.today-icon { width: 72px; height: 72px; flex: none; }
+.today-text { display: flex; flex-direction: column; }
+.today-label { color: var(--berry); font-weight: 700; }
+.today-name { font-family: "Fredoka", sans-serif; font-size: 1.5rem; line-height: 1.2; }
+.useit { margin-top: 36px; }
+.count { margin-left: 4px; font-weight: 600; opacity: 0.65; }
+
+/* ===== filters ===== */
+.filterbox { margin: 0 0 18px; }
+.filter-head { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
+.filter-group { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 8px 0; }
+.filter-label { min-width: 96px; font-weight: 700; color: var(--muted); }
+.linkish {
+  font: inherit; font-weight: 700; color: var(--berry); background: none; border: 0;
+  padding: 8px; text-decoration: underline; cursor: pointer;
+}
+.note { margin: 6px 0 14px; font-size: 0.9rem; color: var(--muted); }
+
+/* ===== recipe header band ===== */
+.rhead { display: flex; align-items: center; gap: 20px; margin: 16px 0 8px; }
+.rhead h2 { margin: 0 0 10px; }
+.rhead-icon { width: 96px; height: 96px; flex: none; }
+.stats { display: flex; flex-wrap: wrap; gap: 10px; }
+.stats div { display: flex; flex-direction: column; padding: 6px 14px; background: var(--bg); border-radius: 14px; }
+.stats span { font-size: 0.8rem; color: var(--muted); }
+.stats strong { font-size: 1rem; }
+@media (max-width: 560px) {
+  .rhead { flex-direction: column; align-items: flex-start; }
+  .rhead-icon { width: 72px; height: 72px; }
+}
+
+/* ===== pan helper, storage, notes, related ===== */
+.pan { margin: 4px 0 14px; }
+.pan select {
+  min-height: 44px; padding: 8px 10px; font: inherit; color: var(--ink);
+  background: var(--surface); border: 2px solid var(--pistachio); border-radius: 12px;
+}
+.store, .notes, .related { margin-top: 24px; }
+.notes textarea {
+  width: 100%; padding: 12px; font: inherit; color: var(--ink);
+  background: var(--bg); border: 2px solid var(--pistachio); border-radius: 14px; resize: vertical;
+}
+.notes textarea:focus-visible { outline: 3px solid var(--butter); outline-offset: 2px; }
