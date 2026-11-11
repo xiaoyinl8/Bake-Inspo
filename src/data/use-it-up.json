@@ -1,0 +1,57 @@
+[
+  {
+    "id": "bread-pudding",
+    "name": "Bread Pudding",
+    "emoji": "🍞",
+    "tags": ["pudding", "stale bread", "use up bread", "custard", "cinnamon", "comfort", "beginner", "no mixer", "dessert"],
+    "totalTime": "about 1 hour 15 minutes",
+    "yield": "8 servings",
+    "ingredients": [
+      { "name": "stale bread, cut in 2 cm cubes", "grams": 350 },
+      { "name": "milk", "grams": 400 },
+      { "name": "heavy cream", "grams": 200 },
+      { "name": "eggs", "grams": 150 },
+      { "name": "sugar", "grams": 100 },
+      { "name": "butter (melted)", "grams": 30 },
+      { "name": "vanilla extract", "grams": 8 },
+      { "name": "cinnamon", "grams": 3 },
+      { "name": "salt", "grams": 2 },
+      { "name": "raisins (optional)", "grams": 80 }
+    ],
+    "steps": [
+      { "title": "Prep the dish", "text": "Butter a 23 cm square baking dish and spread the bread cubes in it. Scatter the raisins over the top if using." },
+      { "title": "Whisk the custard", "text": "Whisk the milk, cream, eggs, sugar, vanilla, cinnamon and salt until smooth. Pour it evenly over the bread and press the cubes down so they soak." },
+      { "title": "Soak", "text": "Let the bread drink up the custard, pressing down once or twice. Drizzle the melted butter over the top.", "time": "20 min" },
+      { "title": "Bake", "text": "Bake until the top is deep golden and the center is just set with no liquid custard. Cool 10 minutes and serve warm.", "time": "40-45 min", "temp": "175 °C" }
+    ]
+  },
+  {
+    "id": "banana-oat-muffins",
+    "name": "Banana Oat Muffins",
+    "emoji": "🍌",
+    "tags": ["muffin", "banana", "oat", "use up bananas", "breakfast", "beginner", "quick", "one bowl", "chocolate"],
+    "totalTime": "about 40 minutes",
+    "yield": "12 muffins",
+    "ingredients": [
+      { "name": "very ripe bananas, mashed", "grams": 300 },
+      { "name": "egg", "grams": 50 },
+      { "name": "brown sugar", "grams": 100 },
+      { "name": "neutral oil", "grams": 60 },
+      { "name": "milk", "grams": 60 },
+      { "name": "vanilla extract", "grams": 5 },
+      { "name": "all-purpose flour", "grams": 200 },
+      { "name": "rolled oats", "grams": 50 },
+      { "name": "baking powder", "grams": 8 },
+      { "name": "baking soda", "grams": 2 },
+      { "name": "cinnamon", "grams": 3 },
+      { "name": "salt", "grams": 2 },
+      { "name": "chocolate chips", "grams": 80 }
+    ],
+    "steps": [
+      { "title": "Mix the wet ingredients", "text": "In one large bowl, whisk the mashed bananas, egg, brown sugar, oil, milk and vanilla until smooth." },
+      { "title": "Add the dry ingredients", "text": "Sprinkle the flour, oats, baking powder, baking soda, cinnamon and salt over the bowl and fold with a spatula just until no dry flour shows. Fold in the chocolate chips." },
+      { "title": "Fill the tin", "text": "Divide the batter among 12 paper-lined muffin cups, filling each about three-quarters full." },
+      { "title": "Bake", "text": "Bake until golden and a toothpick comes out clean. Cool in the tin for 5 minutes.", "time": "18-22 min", "temp": "190 °C" }
+    ]
+  }
+]
