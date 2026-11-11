@@ -147,3 +147,35 @@ export function combine(list) {
   }
   return [...map].map(([name, grams]) => ({ name, grams })).sort((a, b) => a.name.localeCompare(b.name));
 }
+
+/* ---------- recipe of the day: same pick all day, changes at midnight ---------- */
+export function dailyPick(all, d = new Date()) {
+  const day = Math.floor(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()) / 86400000);
+  const sorted = [...all].sort((a, b) => a.id.localeCompare(b.id));
+  return sorted[day % sorted.length];
+}
+
+/* ---------- "got leftovers?" chips: label + pattern matched against ingredient names ---------- */
+export const LEFTOVERS = [
+  ["Ripe bananas", /banana/i],
+  ["Egg whites", /egg white/i],
+  ["Egg yolks", /egg yolk/i],
+  ["Buttermilk", /buttermilk/i],
+  ["Heavy cream", /heavy cream|whipping cream/i],
+  ["Sour cream or yogurt", /sour cream|yogurt/i],
+  ["Stale bread", /stale bread/i],
+  ["Apples", /apple/i],
+];
+
+/* ---------- "you might also like": shared tags, rare tags count for more ---------- */
+export function related(r, all, n = 4) {
+  const count = {};
+  all.forEach((x) => x.tags.forEach((t) => { count[t] = (count[t] || 0) + 1; }));
+  return all
+    .filter((x) => x.id !== r.id)
+    .map((x) => ({ x, s: x.tags.filter((t) => r.tags.includes(t)).reduce((a, t) => a + 1 / count[t], 0) }))
+    .filter((o) => o.s > 0)
+    .sort((a, b) => b.s - a.s)
+    .slice(0, n)
+    .map((o) => o.x);
+}
