@@ -270,3 +270,9 @@ main { position: relative; z-index: 1; }
 .season { margin-top: 36px; }
 .season-title { font-size: 1.6rem; margin: 0 0 14px; }
 .checklist input:checked + span { text-decoration: line-through; opacity: 0.55; }
+
+.crumb { display: inline-flex; align-items: center; gap: 8px; }
+.grid.big { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+.grid.big .card { padding: 44px 20px; }
+.grid.big .card-emoji { font-size: 5rem; }
+.grid.big .card-name { font-size: 1.9rem; }
