@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { CATEGORIES } from "./categories.js";
 import { DIET_FILTERS, fmtAmount, substitutionsFor, seasonName, seasonalRecipes, suggestRecipes, combine } from "./extras.js";
+import { TREE } from "./categories.js";
 
 // Change this to your repo's issues page (or a mailto: link) so visitors can report wrong amounts
 const FEEDBACK_URL = "https://github.com/xiaoyinl8/Bake-Inspo/issues/new";
@@ -9,24 +10,27 @@ const recipeFiles = import.meta.glob("./data/*.json", { eager: true });
 const recipes = Object.values(recipeFiles).flatMap((m) => m.default);
 const byId = Object.fromEntries(recipes.map((r) => [r.id, r]));
 
-function buildCategories() {
-  const cats = CATEGORIES.map((c) => ({
-    ...c,
-    subs: c.subs
-      .map((s) => ({ name: s.name, recipes: s.ids.map((id) => byId[id]).filter(Boolean) }))
-      .filter((s) => s.recipes.length > 0),
-  })).filter((c) => c.subs.length > 0);
-  const listed = new Set(CATEGORIES.flatMap((c) => c.subs.flatMap((s) => s.ids)));
-  const extra = recipes.filter((r) => !listed.has(r.id));
-  if (extra.length > 0) {
-    cats.push({ id: "more", name: "More bakes", emoji: "✨", subs: [{ name: "Newly added", recipes: extra }] });
-  }
-  return cats.map((c) => ({
-    ...c,
-    count: new Set(c.subs.flatMap((s) => s.recipes.map((r) => r.id))).size,
-  }));
+// Turns the id lists in categories.js into real recipes. Each recipe is used once.
+// Any recipe not listed anywhere is collected under "More bakes" so nothing goes missing.
+function buildTree() {
+  const used = new Set();
+  const walk = (n) => {
+    if (n.ids) {
+      const list = n.ids.map((id) => byId[id]).filter((r) => r && !used.has(r.id));
+      list.forEach((r) => used.add(r.id));
+      return list.length ? { name: n.name, emoji: n.emoji, recipes: list, count: list.length } : null;
+    }
+    const children = n.children.map(walk).filter(Boolean);
+    return children.length
+      ? { name: n.name, emoji: n.emoji, children, count: children.reduce((s, c) => s + c.count, 0) }
+      : null;
+  };
+  const top = TREE.map(walk).filter(Boolean);
+  const extra = recipes.filter((r) => !used.has(r.id));
+  if (extra.length) top.push({ name: "More bakes", emoji: "✨", recipes: extra, count: extra.length });
+  return top;
 }
-const categories = buildCategories();
+const tree = buildTree();
 
 /* ---------- helpers ---------- */
 const store = {
@@ -171,14 +175,49 @@ function RecipeGrid({ list, active, cardProps }) {
   );
 }
 
-function Crumbs({ cat, sub, onHome, onCat }) {
+function Crumbs({ path, setPath }) {
   return (
     <nav className="crumbs" aria-label="Breadcrumb">
-      <button onClick={onHome}>All categories</button>
-      <span aria-hidden="true">›</span>
-      {sub ? <button onClick={onCat}>{cat.name}</button> : <strong>{cat.name}</strong>}
-      {sub && (<><span aria-hidden="true">›</span><strong>{sub.name}</strong></>)}
+      <button onClick={() => setPath([])}>All</button>
+      {path.map((n, i) => (
+        <span key={n.name} className="crumb">
+          <span aria-hidden="true">›</span>
+          {i === path.length - 1 ? (
+            <strong>{n.name}</strong>
+          ) : (
+            <button onClick={() => setPath(path.slice(0, i + 1))}>{n.name}</button>
+          )}
+        </span>
+      ))}
     </nav>
+  );
+}
+
+function BrowseTree({ path, setPath, active, onToggle, cardProps }) {
+  const node = path[path.length - 1];
+  return (
+    <>
+      {node && <Crumbs path={path} setPath={setPath} />}
+      {node?.recipes ? (
+        <>
+          <FilterBar active={active} onToggle={onToggle} />
+          <RecipeGrid list={node.recipes} active={active} cardProps={cardProps} />
+        </>
+      ) : (
+        <section className={node ? "grid" : "grid big"}>
+          {(node ? node.children : tree).map((n) => (
+            <Tile
+              key={n.name}
+              emoji={n.emoji ?? node?.emoji}
+              name={n.name}
+              meta={`${n.count} ${n.count === 1 ? "recipe" : "recipes"}`}
+              onClick={() => setPath([...path, n])}
+            />
+          ))}
+        </section>
+      )}
+      {!node && <SeasonRow cardProps={cardProps} />}
+    </>
   );
 }
 
@@ -460,16 +499,17 @@ function Moved({ id, cardProps, onHome }) {
   );
 }
 
-function NoMatch({ query, cardProps, onPickCat }) {
+function NoMatch({ query, cardProps, onPick }) {
   const similar = suggestRecipes(query, recipes);
+  const links = tree.flatMap((t) => (t.children ?? []).map((n) => [t, n]));
   return (
     <>
       <p className="empty">Nothing matches "{query}" yet.{similar.length > 0 ? " Did you mean one of these?" : ""}</p>
       {similar.length > 0 && <RecipeGrid list={similar} active={[]} cardProps={cardProps} />}
       <p className="empty">Or browse a category:</p>
       <div className="filters" style={{ justifyContent: "center" }}>
-        {categories.map((c) => (
-          <button key={c.id} className="pill" onClick={() => onPickCat(c)}>{c.emoji} {c.name}</button>
+        {links.map((p) => (
+          <button key={p[1].name} className="pill" onClick={() => onPick(p)}>{p[1].emoji} {p[1].name}</button>
         ))}
       </div>
     </>
@@ -534,8 +574,7 @@ function ShoppingList({ cart, cups, onRemove, onClear }) {
 export default function App() {
   const [view, setView] = useState("browse");
   const [query, setQuery] = useState("");
-  const [cat, setCat] = useState(null);
-  const [sub, setSub] = useState(null);
+  const [path, setPath] = useState([]);
   const [selected, setSelected] = useState(null);
   const [missingId, setMissingId] = useState(null);
   const [active, setActive] = useState([]);
@@ -574,9 +613,7 @@ export default function App() {
   const toggleSave = (id) => setSaved(saved.includes(id) ? saved.filter((x) => x !== id) : [...saved, id]);
   const toggleCart = (id) => setCart(cart.includes(id) ? cart.filter((x) => x !== id) : [...cart, id]);
   const toggleFilter = (f) => setActive(active.includes(f) ? active.filter((x) => x !== f) : [...active, f]);
-  const go = (v) => { setView(v); setCat(null); setSub(null); setQuery(""); closeRecipe(); };
-  const goHome = () => { setCat(null); setSub(null); };
-
+  const go = (v) => { setView(v); setPath([]); setQuery(""); closeRecipe(); };
   const cardProps = { saved, onOpen: openRecipe, onSave: toggleSave };
   const searching = query.trim().length > 0;
   const results = useMemo(() => searchRecipes(query), [query]);
@@ -621,39 +658,11 @@ export default function App() {
         <RecipeGrid list={results} active={active} cardProps={cardProps} />
       </>
     ) : (
-      <NoMatch query={query} cardProps={cardProps} onPickCat={(c) => { setQuery(""); setCat(c); }} />
-    );
-  } else if (cat && sub) {
-    content = (
-      <>
-        <Crumbs cat={cat} sub={sub} onHome={goHome} onCat={() => setSub(null)} />
-        <FilterBar active={active} onToggle={toggleFilter} />
-        <RecipeGrid list={sub.recipes} active={active} cardProps={cardProps} />
-      </>
-    );
-  } else if (cat) {
-    content = (
-      <>
-        <Crumbs cat={cat} sub={null} onHome={goHome} onCat={() => setSub(null)} />
-        <section className="grid">
-          {cat.subs.map((s) => (
-            <Tile key={s.name} emoji={cat.emoji} name={s.name}
-              meta={`${s.recipes.length} ${s.recipes.length === 1 ? "recipe" : "recipes"}`}
-              onClick={() => setSub(s)} />
-          ))}
-        </section>
-      </>
+      <NoMatch query={query} cardProps={cardProps} onPick={(p) => { setQuery(""); setPath(p); }} />
     );
   } else {
     content = (
-      <>
-        <section className="grid">
-          {categories.map((c) => (
-            <Tile key={c.id} emoji={c.emoji} name={c.name} meta={`${c.count} recipes`} onClick={() => setCat(c)} />
-          ))}
-        </section>
-        <SeasonRow cardProps={cardProps} />
-      </>
+      <BrowseTree path={path} setPath={setPath} active={active} onToggle={toggleFilter} cardProps={cardProps} />
     );
   }
 
