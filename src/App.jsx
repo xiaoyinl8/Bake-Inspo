@@ -1,33 +1,44 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { CATEGORIES } from "./categories.js";
-import { DIET_FILTERS, fmtAmount, substitutionsFor, seasonName, seasonalRecipes, suggestRecipes, combine } from "./extras.js";
 import { TREE } from "./categories.js";
+import { Icon } from "./icons.jsx";
+import { INFO, ONE_BOWL, LOAF_PAN, PANS, panOf, panLabel, panArea, levelOf, isNoMixer, isNoOven } from "./info.js";
+import {
+  DIET_FILTERS, fmtAmount, substitutionsFor, seasonName, seasonalRecipes,
+  suggestRecipes, combine, dailyPick, LEFTOVERS, related,
+} from "./extras.js";
 
 // Change this to your repo's issues page (or a mailto: link) so visitors can report wrong amounts
-const FEEDBACK_URL = "https://github.com/xiaoyinl8/Bake-Inspo/issues/new";
+const FEEDBACK_URL = "https://github.com/YOUR-USERNAME/YOUR-REPO/issues/new";
 
 const recipeFiles = import.meta.glob("./data/*.json", { eager: true });
 const recipes = Object.values(recipeFiles).flatMap((m) => m.default);
 const byId = Object.fromEntries(recipes.map((r) => [r.id, r]));
 
+// recipe id -> icon name, filled in while the menu tree is built
+const iconById = {};
+
 // Turns the id lists in categories.js into real recipes. Each recipe is used once.
 // Any recipe not listed anywhere is collected under "More bakes" so nothing goes missing.
 function buildTree() {
   const used = new Set();
-  const walk = (n) => {
+  const walk = (n, inherited) => {
+    const icon = n.icon ?? inherited;
     if (n.ids) {
       const list = n.ids.map((id) => byId[id]).filter((r) => r && !used.has(r.id));
-      list.forEach((r) => used.add(r.id));
-      return list.length ? { name: n.name, emoji: n.emoji, recipes: list, count: list.length } : null;
+      list.forEach((r) => { used.add(r.id); iconById[r.id] = icon; });
+      return list.length ? { name: n.name, emoji: n.emoji, icon, recipes: list, count: list.length } : null;
     }
-    const children = n.children.map(walk).filter(Boolean);
+    const children = n.children.map((c) => walk(c, icon)).filter(Boolean);
     return children.length
-      ? { name: n.name, emoji: n.emoji, children, count: children.reduce((s, c) => s + c.count, 0) }
+      ? { name: n.name, emoji: n.emoji, icon, children, count: children.reduce((s, c) => s + c.count, 0) }
       : null;
   };
-  const top = TREE.map(walk).filter(Boolean);
+  const top = TREE.map((n) => walk(n, undefined)).filter(Boolean);
   const extra = recipes.filter((r) => !used.has(r.id));
-  if (extra.length) top.push({ name: "More bakes", emoji: "✨", recipes: extra, count: extra.length });
+  if (extra.length) {
+    extra.forEach((r) => { iconById[r.id] = "sparkle"; });
+    top.push({ name: "More bakes", emoji: "✨", icon: "sparkle", recipes: extra, count: extra.length });
+  }
   return top;
 }
 const tree = buildTree();
@@ -64,13 +75,22 @@ const timerMinutes = (t) => {
   return m ? (m[2] === "hour" ? +m[1] * 60 : +m[1]) : 0;
 };
 
-const FILTERS = {
-  "Under 1 hour": (r) => minutesOf(r) <= 60,
-  Beginner: (r) => r.tags.includes("beginner"),
-  "No yeast": (r) => !r.ingredients.some((i) => /yeast/i.test(i.name)),
-  "Few ingredients": (r) => r.ingredients.length <= 6,
-  ...DIET_FILTERS,
+const FILTER_GROUPS = {
+  "Quick picks": {
+    "Under 1 hour": (r) => minutesOf(r) <= 60,
+    Beginner: (r) => r.tags.includes("beginner"),
+    "No yeast": (r) => !r.ingredients.some((i) => /yeast/i.test(i.name)),
+    "Few ingredients": (r) => r.ingredients.length <= 6,
+  },
+  Equipment: {
+    "One bowl": (r) => ONE_BOWL.has(r.id),
+    "No mixer": isNoMixer,
+    "No oven": isNoOven,
+    "Loaf pan": (r) => LOAF_PAN.has(r.id),
+  },
+  Dietary: DIET_FILTERS,
 };
+const FILTERS = Object.assign({}, ...Object.values(FILTER_GROUPS));
 
 // Pantry items: label shown to the user + pattern matched against ingredient names
 const PANTRY = [
@@ -114,10 +134,10 @@ function beep() {
 }
 
 /* ---------- small components ---------- */
-function Tile({ emoji, name, meta, onClick }) {
+function Tile({ icon, emoji, name, meta, tint, onClick }) {
   return (
-    <button className="card" onClick={onClick}>
-      {emoji && <span className="card-emoji" aria-hidden="true">{emoji}</span>}
+    <button className={`card${tint != null ? ` tint-${tint % 6}` : ""}`} onClick={onClick}>
+      {icon ? <Icon name={icon} className="card-icon" /> : emoji ? <span className="card-emoji" aria-hidden="true">{emoji}</span> : null}
       <span className="card-name">{name}</span>
       {meta && <span className="card-meta">{meta}</span>}
     </button>
@@ -126,10 +146,11 @@ function Tile({ emoji, name, meta, onClick }) {
 
 function RecipeCard({ r, cardProps }) {
   const isSaved = cardProps.saved.includes(r.id);
+  const icon = iconById[r.id];
   return (
     <div className="card-wrap">
       <button className="card" onClick={() => cardProps.onOpen(r)}>
-        <span className="card-emoji" aria-hidden="true">{r.emoji}</span>
+        {icon ? <Icon name={icon} className="card-icon" /> : <span className="card-emoji" aria-hidden="true">{r.emoji}</span>}
         <span className="card-name">{r.name}</span>
         <span className="card-meta">{fmtMins(minutesOf(r))} · {r.yield}</span>
         {r.tags.includes("beginner") && <span className="chip">Beginner</span>}
@@ -146,22 +167,32 @@ function RecipeCard({ r, cardProps }) {
   );
 }
 
-function FilterBar({ active, onToggle }) {
+function FilterBar({ active, onToggle, onClear }) {
+  const [open, setOpen] = useState(active.length > 0);
   return (
-    <>
-      <div className="filters no-print" role="group" aria-label="Filters">
-        {Object.keys(FILTERS).map((f) => (
-          <button key={f} className="pill" aria-pressed={active.includes(f)} onClick={() => onToggle(f)}>
-            {f}
-          </button>
-        ))}
+    <div className="filterbox no-print">
+      <div className="filter-head">
+        <button className="pill" aria-expanded={open} onClick={() => setOpen(!open)}>
+          Filters{active.length ? ` (${active.length})` : ""} {open ? "▴" : "▾"}
+        </button>
+        {active.length > 0 && <button className="linkish" onClick={onClear}>Clear</button>}
       </div>
-      {active.some((f) => f in DIET_FILTERS) && (
-        <p className="note no-print">
+      {open && Object.entries(FILTER_GROUPS).map(([group, fs]) => (
+        <div key={group} className="filter-group" role="group" aria-label={group}>
+          <span className="filter-label">{group}</span>
+          {Object.keys(fs).map((f) => (
+            <button key={f} className="pill" aria-pressed={active.includes(f)} onClick={() => onToggle(f)}>
+              {f}
+            </button>
+          ))}
+        </div>
+      ))}
+      {open && active.some((f) => f in DIET_FILTERS) && (
+        <p className="note">
           Dietary filters only read the ingredient lists. Always check packaging labels yourself, especially for allergies.
         </p>
       )}
-    </>
+    </div>
   );
 }
 
@@ -193,29 +224,93 @@ function Crumbs({ path, setPath }) {
   );
 }
 
-function BrowseTree({ path, setPath, active, onToggle, cardProps }) {
+/* ---------- landing page extras ---------- */
+function Today({ cardProps }) {
+  const r = useMemo(() => dailyPick(recipes), []);
+  return (
+    <button className="today" onClick={() => cardProps.onOpen(r)}>
+      <Icon name={iconById[r.id] ?? "sparkle"} className="today-icon" />
+      <span className="today-text">
+        <span className="today-label">Today's bake</span>
+        <span className="today-name">{r.name}</span>
+        <span className="card-meta">{r.totalTime} · {r.yield}</span>
+      </span>
+    </button>
+  );
+}
+
+function UseItUp({ onPick }) {
+  return (
+    <section className="useit">
+      <h2 className="season-title">Got leftovers?</h2>
+      <div className="filters">
+        {LEFTOVERS.map(([label, re]) => {
+          const n = recipes.filter((r) => r.ingredients.some((i) => re.test(i.name))).length;
+          return n > 0 ? (
+            <button key={label} className="pill" onClick={() => onPick(label)}>
+              {label} <span className="count">{n}</span>
+            </button>
+          ) : null;
+        })}
+      </div>
+    </section>
+  );
+}
+
+function SeasonRow({ cardProps }) {
+  const list = useMemo(() => seasonalRecipes(recipes), []);
+  if (list.length === 0) return null;
+  return (
+    <section className="season">
+      <h2 className="season-title">In season: {seasonName()}</h2>
+      <RecipeGrid list={list} active={[]} cardProps={cardProps} />
+    </section>
+  );
+}
+
+function Leftover({ label, filterProps, cardProps, onBack }) {
+  const re = LEFTOVERS.find(([l]) => l === label)?.[1];
+  const list = re ? recipes.filter((r) => r.ingredients.some((i) => re.test(i.name))) : [];
+  return (
+    <>
+      <nav className="crumbs" aria-label="Breadcrumb">
+        <button onClick={onBack}>All</button>
+        <span aria-hidden="true">›</span>
+        <strong>Using up: {label}</strong>
+      </nav>
+      <FilterBar {...filterProps} />
+      <RecipeGrid list={list} active={filterProps.active} cardProps={cardProps} />
+    </>
+  );
+}
+
+function BrowseTree({ path, setPath, filterProps, cardProps, onLeftover }) {
   const node = path[path.length - 1];
   return (
     <>
       {node && <Crumbs path={path} setPath={setPath} />}
       {node?.recipes ? (
         <>
-          <FilterBar active={active} onToggle={onToggle} />
-          <RecipeGrid list={node.recipes} active={active} cardProps={cardProps} />
+          <FilterBar {...filterProps} />
+          <RecipeGrid list={node.recipes} active={filterProps.active} cardProps={cardProps} />
         </>
       ) : (
         <section className={node ? "grid" : "grid big"}>
-          {(node ? node.children : tree).map((n) => (
+          {(node ? node.children : tree).map((n, i) => (
             <Tile
               key={n.name}
-              emoji={n.emoji ?? node?.emoji}
+              icon={n.icon}
+              emoji={n.emoji}
               name={n.name}
+              tint={i + (node ? path.length : 0)}
               meta={`${n.count} ${n.count === 1 ? "recipe" : "recipes"}`}
               onClick={() => setPath([...path, n])}
             />
           ))}
         </section>
       )}
+      {!node && <Today cardProps={cardProps} />}
+      {!node && <UseItUp onPick={onLeftover} />}
       {!node && <SeasonRow cardProps={cardProps} />}
     </>
   );
@@ -346,12 +441,53 @@ function CookMode({ recipe, fahrenheit, onExit }) {
 }
 
 /* ---------- recipe page ---------- */
-function RecipePage({ recipe, fahrenheit, cups, saved, onSave, inList, onToggleList, onBack }) {
-  const subs = substitutionsFor(recipe);
+function RecipeHeader({ recipe, mult }) {
+  return (
+    <header className="rhead">
+      <Icon name={iconById[recipe.id] ?? "sparkle"} className="rhead-icon" />
+      <div>
+        <h2>{recipe.name}</h2>
+        <div className="stats">
+          <div><span>Time</span><strong>{recipe.totalTime}</strong></div>
+          <div><span>Makes</span><strong>{recipe.yield}{mult !== 1 ? ` (×${mult})` : ""}</strong></div>
+          <div><span>Level</span><strong>{levelOf(recipe)}</strong></div>
+        </div>
+      </div>
+    </header>
+  );
+}
+
+function PanHelper({ pan, choice, mult, onChoose }) {
+  return (
+    <div className="pan no-print">
+      <label>
+        Using a different pan?{" "}
+        <select value={choice} onChange={(e) => onChoose(e.target.value)}>
+          <option value="">As written: {panLabel(pan)}</option>
+          {PANS.map((p) => <option key={p.label} value={p.label}>{p.label}</option>)}
+        </select>
+      </label>
+      {choice && (
+        <p className="note">
+          Amounts scaled ×{mult} for a {choice} pan. For eggs, whisk and weigh out the amount. Batter depth changes,
+          so start checking for doneness a few minutes early in a wider pan, or later in a deeper one.
+        </p>
+      )}
+    </div>
+  );
+}
+
+function RecipePage({ recipe, fahrenheit, cups, saved, onSave, inList, onToggleList, note, onNote, cardProps, onBack }) {
   const [mult, setMult] = useState(1);
+  const [panChoice, setPanChoice] = useState("");
   const [done, setDone] = useState([]);
   const [cooking, setCooking] = useState(false);
   const [copied, setCopied] = useState(false);
+  const subs = substitutionsFor(recipe);
+  const pan = panOf(recipe);
+  const info = INFO[recipe.id];
+  const more = useMemo(() => related(recipe, recipes), [recipe]);
+
   const tick = (n) => setDone(done.includes(n) ? done.filter((x) => x !== n) : [...done, n]);
   const copy = async () => {
     try {
@@ -359,6 +495,11 @@ function RecipePage({ recipe, fahrenheit, cups, saved, onSave, inList, onToggleL
       setCopied(true);
       setTimeout(() => setCopied(false), 1500);
     } catch { /* ignore */ }
+  };
+  const choosePan = (label) => {
+    setPanChoice(label);
+    const p = PANS.find((x) => x.label === label);
+    setMult(p && pan ? Math.round((p.area / panArea(pan)) * 100) / 100 : 1);
   };
 
   return (
@@ -374,16 +515,16 @@ function RecipePage({ recipe, fahrenheit, cups, saved, onSave, inList, onToggleL
         <button className="surprise" onClick={() => setCooking(true)}>Start cooking</button>
       </div>
 
-      <h2>{recipe.name}</h2>
-      <p className="card-meta">{recipe.totalTime} · {recipe.yield}{mult !== 1 ? ` (×${mult})` : ""}</p>
+      <RecipeHeader recipe={recipe} mult={mult} />
 
       <section className="ingredients">
         <h3>What you need</h3>
         <div className="servings no-print" role="group" aria-label="Scale recipe">
           {[0.5, 1, 2, 3].map((m) => (
-            <button key={m} className="pill" aria-pressed={mult === m} onClick={() => setMult(m)}>×{m}</button>
+            <button key={m} className="pill" aria-pressed={mult === m} onClick={() => { setMult(m); setPanChoice(""); }}>×{m}</button>
           ))}
         </div>
+        {pan && <PanHelper pan={pan} choice={panChoice} mult={mult} onChoose={choosePan} />}
         <ul className="checklist">
           {recipe.ingredients.map((ing, n) => (
             <li key={n} className={done.includes(n) ? "done" : ""}>
@@ -402,7 +543,7 @@ function RecipePage({ recipe, fahrenheit, cups, saved, onSave, inList, onToggleL
           <ul>{subs.map((s, i) => <li key={i}>{s}</li>)}</ul>
         </section>
       )}
-      
+
       <section>
         <h3>Steps</h3>
         <ol className="steps">
@@ -423,6 +564,32 @@ function RecipePage({ recipe, fahrenheit, cups, saved, onSave, inList, onToggleL
         </ol>
       </section>
 
+      {info?.store && (
+        <section className="store">
+          <h3>Storing &amp; make-ahead</h3>
+          <p>{info.store}</p>
+        </section>
+      )}
+
+      <section className="notes no-print">
+        <h3>My notes</h3>
+        <textarea
+          value={note}
+          onChange={(e) => onNote(recipe.id, e.target.value)}
+          placeholder="Used 20 g less sugar, baked 3 minutes longer…"
+          rows={3}
+          aria-label={`Notes for ${recipe.name}`}
+        />
+        <p className="note">Saved in this browser only.</p>
+      </section>
+
+      {more.length > 0 && (
+        <section className="related no-print">
+          <h3>You might also like</h3>
+          <RecipeGrid list={more} active={[]} cardProps={cardProps} />
+        </section>
+      )}
+
       {cooking && <CookMode recipe={recipe} fahrenheit={fahrenheit} onExit={() => setCooking(false)} />}
     </article>
   );
@@ -441,6 +608,86 @@ function About() {
   );
 }
 
+function Moved({ id, cardProps, onHome }) {
+  const similar = suggestRecipes(id.replace(/-/g, " "), recipes);
+  return (
+    <article className="recipe">
+      <h2>That recipe has moved</h2>
+      <p>We couldn't find a recipe called "{id.replace(/-/g, " ")}". It may have been renamed or removed.</p>
+      <button className="surprise" onClick={onHome}>Browse all recipes</button>
+      {similar.length > 0 && (
+        <>
+          <h3>Maybe you meant</h3>
+          <RecipeGrid list={similar} active={[]} cardProps={cardProps} />
+        </>
+      )}
+    </article>
+  );
+}
+
+function NoMatch({ query, cardProps, onPick }) {
+  const similar = suggestRecipes(query, recipes);
+  const links = tree.flatMap((t) => (t.children ?? []).map((n) => [t, n]));
+  return (
+    <>
+      <p className="empty">Nothing matches "{query}" yet.{similar.length > 0 ? " Did you mean one of these?" : ""}</p>
+      {similar.length > 0 && <RecipeGrid list={similar} active={[]} cardProps={cardProps} />}
+      <p className="empty">Or browse a category:</p>
+      <div className="filters" style={{ justifyContent: "center" }}>
+        {links.map((p) => (
+          <button key={p[1].name} className="pill" onClick={() => onPick(p)}>
+            {p[1].icon && <Icon name={p[1].icon} className="mini" />}{p[1].name}
+          </button>
+        ))}
+      </div>
+    </>
+  );
+}
+
+function ShoppingList({ cart, cups, onRemove }) {
+  const [copied, setCopied] = useState(false);
+  const picked = cart.map((id) => byId[id]).filter(Boolean);
+  const items = combine(picked);
+  if (picked.length === 0) {
+    return <p className="empty">Your list is empty. Open a recipe and tap "+ Shopping list".</p>;
+  }
+  const copy = async () => {
+    const text = items.map((i) => `${fmtAmount(i.grams, i.name, cups)} ${i.name}`).join("\n");
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1500);
+    } catch { /* ignore */ }
+  };
+  return (
+    <article className="recipe">
+      <h2>Shopping list</h2>
+      <div className="filters no-print">
+        {picked.map((r) => (
+          <button key={r.id} className="pill" onClick={() => onRemove(r.id)} aria-label={`Remove ${r.name}`}>
+            {r.name} ✕
+          </button>
+        ))}
+      </div>
+      <ul className="checklist">
+        {items.map((i) => (
+          <li key={i.name}>
+            <label>
+              <input type="checkbox" />
+              <span><strong>{fmtAmount(i.grams, i.name, cups)}</strong> {i.name}</span>
+            </label>
+          </li>
+        ))}
+      </ul>
+      <div className="actions no-print">
+        <button className="pill" onClick={copy}>{copied ? "Copied!" : "Copy list"}</button>
+        <button className="pill" onClick={() => picked.forEach((r) => onRemove(r.id))}>Clear all</button>
+      </div>
+    </article>
+  );
+}
+
+/* ---------- background art ---------- */
 const Star = ({ className }) => (
   <svg className={`star ${className}`} viewBox="0 0 24 24" aria-hidden="true">
     <path d="M12 0C13 7 17 11 24 12 17 13 13 17 12 24 11 17 7 13 0 12 7 11 11 7 12 0Z" />
@@ -482,105 +729,20 @@ function Decor() {
   );
 }
 
-function Moved({ id, cardProps, onHome }) {
-  const similar = suggestRecipes(id.replace(/-/g, " "), recipes);
-  return (
-    <article className="recipe">
-      <h2>That recipe has moved</h2>
-      <p>We couldn't find a recipe called "{id.replace(/-/g, " ")}". It may have been renamed or removed.</p>
-      <button className="surprise" onClick={onHome}>Browse all recipes</button>
-      {similar.length > 0 && (
-        <>
-          <h3>Maybe you meant</h3>
-          <RecipeGrid list={similar} active={[]} cardProps={cardProps} />
-        </>
-      )}
-    </article>
-  );
-}
-
-function NoMatch({ query, cardProps, onPick }) {
-  const similar = suggestRecipes(query, recipes);
-  const links = tree.flatMap((t) => (t.children ?? []).map((n) => [t, n]));
-  return (
-    <>
-      <p className="empty">Nothing matches "{query}" yet.{similar.length > 0 ? " Did you mean one of these?" : ""}</p>
-      {similar.length > 0 && <RecipeGrid list={similar} active={[]} cardProps={cardProps} />}
-      <p className="empty">Or browse a category:</p>
-      <div className="filters" style={{ justifyContent: "center" }}>
-        {links.map((p) => (
-          <button key={p[1].name} className="pill" onClick={() => onPick(p)}>{p[1].emoji} {p[1].name}</button>
-        ))}
-      </div>
-    </>
-  );
-}
-
-function SeasonRow({ cardProps }) {
-  const list = useMemo(() => seasonalRecipes(recipes), []);
-  if (list.length === 0) return null;
-  return (
-    <section className="season">
-      <h2 className="season-title">In season: {seasonName()}</h2>
-      <RecipeGrid list={list} active={[]} cardProps={cardProps} />
-    </section>
-  );
-}
-
-function ShoppingList({ cart, cups, onRemove, onClear }) {
-  const [copied, setCopied] = useState(false);
-  const picked = cart.map((id) => byId[id]).filter(Boolean);
-  const items = combine(picked);
-  if (picked.length === 0) {
-    return <p className="empty">Your list is empty. Open a recipe and tap "+ Shopping list".</p>;
-  }
-  const copy = async () => {
-    const text = items.map((i) => `${fmtAmount(i.grams, i.name, cups)} ${i.name}`).join("\n");
-    try {
-      await navigator.clipboard.writeText(text);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch { /* ignore */ }
-  };
-  return (
-    <article className="recipe">
-      <h2>Shopping list</h2>
-      <div className="filters no-print">
-        {picked.map((r) => (
-          <button key={r.id} className="pill" onClick={() => onRemove(r.id)} aria-label={`Remove ${r.name}`}>
-            {r.emoji} {r.name} ✕
-          </button>
-        ))}
-      </div>
-      <ul className="checklist">
-        {items.map((i) => (
-          <li key={i.name}>
-            <label>
-              <input type="checkbox" />
-              <span><strong>{fmtAmount(i.grams, i.name, cups)}</strong> {i.name}</span>
-            </label>
-          </li>
-        ))}
-      </ul>
-      <div className="actions no-print">
-        <button className="pill" onClick={copy}>{copied ? "Copied!" : "Copy list"}</button>
-        <button className="pill" onClick={() => picked.forEach((r) => onRemove(r.id))}>Clear all</button>
-      </div>
-    </article>
-  );
-}
-
 /* ---------- app ---------- */
 export default function App() {
   const [view, setView] = useState("browse");
   const [query, setQuery] = useState("");
   const [path, setPath] = useState([]);
+  const [leftover, setLeftover] = useState(null);
   const [selected, setSelected] = useState(null);
   const [missingId, setMissingId] = useState(null);
+  const [menuOpen, setMenuOpen] = useState(false);
   const [active, setActive] = useState([]);
   const [have, setHave] = useState([]);
   const [saved, setSaved] = useStored("saved", []);
   const [cart, setCart] = useStored("cart", []);
+  const [notes, setNotes] = useStored("notes", {});
   const [cups, setCups] = useStored("cups", false);
   const [fahrenheit, setFahrenheit] = useStored("fahrenheit", false);
   const [theme, setTheme] = useStored(
@@ -590,6 +752,7 @@ export default function App() {
 
   useEffect(() => { document.documentElement.dataset.theme = theme; }, [theme]);
   useEffect(() => { document.title = selected ? `${selected.name} · Bake Inspo` : "Bake Inspo"; }, [selected]);
+  useEffect(() => { window.scrollTo(0, 0); }, [selected, view, path.length, leftover]);
 
   // Shareable links: #/r/<recipe-id>, with a friendly message if the id no longer exists
   useEffect(() => {
@@ -613,8 +776,11 @@ export default function App() {
   const toggleSave = (id) => setSaved(saved.includes(id) ? saved.filter((x) => x !== id) : [...saved, id]);
   const toggleCart = (id) => setCart(cart.includes(id) ? cart.filter((x) => x !== id) : [...cart, id]);
   const toggleFilter = (f) => setActive(active.includes(f) ? active.filter((x) => x !== f) : [...active, f]);
-  const go = (v) => { setView(v); setPath([]); setQuery(""); closeRecipe(); };
+  const setNote = (id, text) => setNotes({ ...notes, [id]: text });
+  const go = (v) => { setView(v); setPath([]); setLeftover(null); setQuery(""); setMenuOpen(false); closeRecipe(); };
+
   const cardProps = { saved, onOpen: openRecipe, onSave: toggleSave };
+  const filterProps = { active, onToggle: toggleFilter, onClear: () => setActive([]) };
   const searching = query.trim().length > 0;
   const results = useMemo(() => searchRecipes(query), [query]);
 
@@ -630,6 +796,9 @@ export default function App() {
         onSave={toggleSave}
         inList={cart.includes(selected.id)}
         onToggleList={toggleCart}
+        note={notes[selected.id] ?? ""}
+        onNote={setNote}
+        cardProps={cardProps}
         onBack={closeRecipe}
       />
     );
@@ -647,22 +816,24 @@ export default function App() {
       <p className="empty">Nothing saved yet. Tap the ♡ on any recipe.</p>
     ) : (
       <>
-        <FilterBar active={active} onToggle={toggleFilter} />
+        <FilterBar {...filterProps} />
         <RecipeGrid list={list} active={active} cardProps={cardProps} />
       </>
     );
   } else if (searching) {
     content = results.length > 0 ? (
       <>
-        <FilterBar active={active} onToggle={toggleFilter} />
+        <FilterBar {...filterProps} />
         <RecipeGrid list={results} active={active} cardProps={cardProps} />
       </>
     ) : (
       <NoMatch query={query} cardProps={cardProps} onPick={(p) => { setQuery(""); setPath(p); }} />
     );
+  } else if (leftover) {
+    content = <Leftover label={leftover} filterProps={filterProps} cardProps={cardProps} onBack={() => setLeftover(null)} />;
   } else {
     content = (
-      <BrowseTree path={path} setPath={setPath} active={active} onToggle={toggleFilter} cardProps={cardProps} />
+      <BrowseTree path={path} setPath={setPath} filterProps={filterProps} cardProps={cardProps} onLeftover={setLeftover} />
     );
   }
 
@@ -670,18 +841,22 @@ export default function App() {
     <>
       <Decor />
       <main>
-        <nav className="topbar no-print" aria-label="Main">
-          <button aria-current={view === "browse" ? "page" : undefined} onClick={() => go("browse")}>Browse</button>
-          <button aria-current={view === "pantry" ? "page" : undefined} onClick={() => go("pantry")}>Pantry</button>
-          <button aria-current={view === "saved" ? "page" : undefined} onClick={() => go("saved")}>Saved{saved.length ? ` (${saved.length})` : ""}</button>
-          <button aria-current={view === "list" ? "page" : undefined} onClick={() => go("list")}>List{cart.length ? ` (${cart.length})` : ""}</button>
-          <button aria-current={view === "about" ? "page" : undefined} onClick={() => go("about")}>About</button>
-          <span className="spacer" />
-          <button onClick={() => setCups(!cups)} aria-label="Toggle grams or cups">{cups ? "Cups" : "Grams"}</button>
-          <button onClick={() => setFahrenheit(!fahrenheit)} aria-label="Toggle temperature unit">°{fahrenheit ? "F" : "C"}</button>
-          <button onClick={() => setTheme(theme === "dark" ? "light" : "dark")} aria-label="Toggle dark mode">
-            {theme === "dark" ? "☀️" : "🌙"}
-          </button>
+        <nav className={`topbar no-print${menuOpen ? " open" : ""}`} aria-label="Main">
+          <button className="menu-btn" aria-expanded={menuOpen} onClick={() => setMenuOpen(!menuOpen)}>☰ Menu</button>
+          <div className="links">
+            <button aria-current={view === "browse" ? "page" : undefined} onClick={() => go("browse")}>Browse</button>
+            <button aria-current={view === "pantry" ? "page" : undefined} onClick={() => go("pantry")}>Pantry</button>
+            <button aria-current={view === "saved" ? "page" : undefined} onClick={() => go("saved")}>Saved{saved.length ? ` (${saved.length})` : ""}</button>
+            <button aria-current={view === "list" ? "page" : undefined} onClick={() => go("list")}>List{cart.length ? ` (${cart.length})` : ""}</button>
+            <button aria-current={view === "about" ? "page" : undefined} onClick={() => go("about")}>About</button>
+          </div>
+          <div className="toggles">
+            <button onClick={() => setCups(!cups)} aria-label="Toggle grams or cups">{cups ? "Cups" : "Grams"}</button>
+            <button onClick={() => setFahrenheit(!fahrenheit)} aria-label="Toggle temperature unit">°{fahrenheit ? "F" : "C"}</button>
+            <button onClick={() => setTheme(theme === "dark" ? "light" : "dark")} aria-label="Toggle dark mode">
+              {theme === "dark" ? "☀️" : "🌙"}
+            </button>
+          </div>
         </nav>
 
         <header className="hero no-print">
