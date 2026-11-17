@@ -129,6 +129,37 @@ const ART = {
       <circle cx="30" cy="46" r="1.3" fill="#fff" />
     </>
   ),
+    gift: (
+    <>
+      <rect x="8" y="28" width="48" height="28" rx="4" fill="#d9546e" />
+      <rect x="5" y="20" width="54" height="12" rx="4" fill="#e8708a" />
+      <rect x="28" y="20" width="8" height="36" fill="#f0c24b" />
+      <g fill="none" stroke="#f0c24b" strokeWidth="4" strokeLinecap="round">
+        <ellipse cx="23" cy="13" rx="9" ry="5" transform="rotate(-20 23 13)" />
+        <ellipse cx="41" cy="13" rx="9" ry="5" transform="rotate(20 41 13)" />
+      </g>
+    </>
+  ),
+  clock: (
+    <>
+      <circle cx="32" cy="32" r="27" fill="#fbe3b6" stroke="#c9762c" strokeWidth="4" />
+      <g stroke="#c9762c" strokeWidth="3" strokeLinecap="round">
+        <path d="M32 9 V13 M32 51 V55 M9 32 H13 M51 32 H55" />
+      </g>
+      <path d="M32 18 V32 L42 38" fill="none" stroke="#4a2a1c" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
+      <circle cx="32" cy="32" r="3" fill="#4a2a1c" />
+    </>
+  ),
+  mug: (
+    <>
+      <path d="M12 24 H44 V42 Q44 54 32 54 H24 Q12 54 12 42 Z" fill="#d9546e" />
+      <path d="M44 29 H50 Q56 29 56 36 Q56 43 50 43 H44" fill="none" stroke="#d9546e" strokeWidth="5" strokeLinecap="round" />
+      <rect x="12" y="24" width="32" height="5" rx="2.5" fill="#e8708a" />
+      <g fill="none" stroke="#b8651f" strokeWidth="3" strokeLinecap="round">
+        <path d="M22 6 Q18 11 22 15 M32 4 Q28 10 32 16 M42 6 Q38 11 42 15" />
+      </g>
+    </>
+  ),
   sparkle: (
     <path
       d="M32 4 C34 22 42 30 60 32 C42 34 34 42 32 60 C30 42 22 34 4 32 C22 30 30 22 32 4Z"
