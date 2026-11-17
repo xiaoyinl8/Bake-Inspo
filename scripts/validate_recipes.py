@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Checks every recipe file before the site is built. Run it from the project root:  python3 scripts/validate_recipes.py
 
-ERRORS stop the deploy (they would break the live site).
-WARNINGS are just reminders and never stop it.
+ERRORS stop the deploy (they would break the live site): bad JSON, missing fields, grams that aren't numbers, duplicate ids.
+WARNINGS are just reminders and never stop it: unused menu ids, missing storage lines, odd times or temperatures.
 """
 import glob
 import json
@@ -76,10 +76,11 @@ for path in sorted(glob.glob("src/data/*.json")):
                     warn(f"{where}: step {k} time \"{t}\" has no number, so the cook-mode timer can't start from it.")
                 tp = s.get("temp")
                 if tp is not None:
-                    m = re.fullmatch(r"(\d+)(?:-(\d+))?\s*°C", tp) if isinstance(tp, str) else None
-                    if not m:
-                        warn(f"{where}: step {k} temp \"{tp}\" should look like \"180 °C\" or \"26-28 °C\" so it converts to °F.")
-                    elif max(int(x) for x in m.groups() if x) > 300:
+                    # Any text is fine as long as every temperature is written in °C, like "180 °C" or "220 °C, then 190 °C"
+                    nums = [int(n) for n in re.findall(r"\d+", tp)] if isinstance(tp, str) else []
+                    if not isinstance(tp, str) or "°C" not in tp or "°F" in tp or not nums:
+                        warn(f"{where}: step {k} temp \"{tp}\" should be written in °C, like \"180 °C\", so it converts to °F.")
+                    elif max(nums) > 300:
                         warn(f"{where}: step {k} temp \"{tp}\" is very hot. Is that a typo?")
         elif "steps" in r:
             err(f"{where}: \"steps\" must be a list.")
@@ -93,7 +94,7 @@ try:
     seen = set()
     for rid in listed:
         if rid not in recipes:
-            err(f'src/categories.js lists "{rid}" but no recipe has that id (a typo, or the recipe file was removed).')
+            warn(f'src/categories.js lists "{rid}" but no recipe has that id. It is skipped on the site (a typo, or a recipe you haven\'t added yet).')
         if rid in seen:
             warn(f'src/categories.js lists "{rid}" more than once. Only its first spot is used.')
         seen.add(rid)
@@ -110,7 +111,7 @@ try:
     info_ids = re.findall(r'^\s*"([a-z0-9-]+)":\s*\{', body, re.M)
     for rid in info_ids:
         if rid not in recipes:
-            err(f'src/info.js has an entry for "{rid}" but no recipe has that id.')
+            warn(f'src/info.js has an entry for "{rid}" but no recipe has that id. It is ignored.')
     for rid in recipes:
         if rid not in info_ids:
             warn(f'"{rid}" has no storage line in src/info.js.')
