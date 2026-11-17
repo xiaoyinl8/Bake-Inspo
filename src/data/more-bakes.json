@@ -1,0 +1,334 @@
+[
+  {
+    "id": "key-lime-pie",
+    "name": "Key Lime Pie",
+    "emoji": "🥧",
+    "tags": ["pie", "lime", "citrus", "graham", "condensed milk", "dessert", "chilled", "make ahead", "summer"],
+    "totalTime": "about 4 hours 30 minutes (mostly chilling)",
+    "yield": "8 slices, one 23 cm pie",
+    "ingredients": [
+      { "name": "graham cracker crumbs", "grams": 200 },
+      { "name": "sugar", "grams": 30 },
+      { "name": "unsalted butter, melted", "grams": 100 },
+      { "name": "egg yolks", "grams": 80 },
+      { "name": "lime zest", "grams": 8 },
+      { "name": "sweetened condensed milk", "grams": 397 },
+      { "name": "lime juice (Key or regular)", "grams": 120 },
+      { "name": "heavy cream, cold", "grams": 200 },
+      { "name": "powdered sugar", "grams": 25 }
+    ],
+    "steps": [
+      { "title": "Make the crust", "text": "Mix the crumbs, sugar and melted butter until it looks like wet sand. Press firmly into a 23 cm pie plate, up the sides too. Bake until set and lightly golden, then let it cool a little.", "time": "10 min", "temp": "175 °C" },
+      { "title": "Mix the filling", "text": "Whisk the egg yolks and lime zest for 2 minutes until pale and thick. Whisk in the condensed milk, then the lime juice, until smooth. It will thicken as the lime juice mixes in." },
+      { "title": "Bake the filling", "text": "Pour into the warm crust and bake until the edges are set but the center still jiggles slightly.", "time": "15 min", "temp": "175 °C" },
+      { "title": "Cool and chill", "text": "Cool on the counter for 30 minutes, then chill until fully set.", "time": "3 hours" },
+      { "title": "Top and serve", "text": "Whip the cream with the powdered sugar to soft peaks. Spoon or pipe over the pie and serve cold." }
+    ]
+  },
+  {
+    "id": "pumpkin-pie",
+    "name": "Pumpkin Pie",
+    "emoji": "🥧",
+    "tags": ["pie", "pumpkin", "autumn", "thanksgiving", "spice", "holiday", "cinnamon", "make ahead"],
+    "totalTime": "about 5 hours (including chilling and cooling)",
+    "yield": "8 slices, one 23 cm pie",
+    "ingredients": [
+      { "name": "all-purpose flour", "grams": 250 },
+      { "name": "cold unsalted butter, cubed", "grams": 170 },
+      { "name": "sugar", "grams": 15 },
+      { "name": "salt", "grams": 6 },
+      { "name": "ice water", "grams": 65 },
+      { "name": "pumpkin puree", "grams": 425 },
+      { "name": "evaporated milk", "grams": 354 },
+      { "name": "brown sugar", "grams": 150 },
+      { "name": "eggs", "grams": 100 },
+      { "name": "cinnamon", "grams": 4 },
+      { "name": "ground ginger", "grams": 3 },
+      { "name": "ground cloves", "grams": 1 },
+      { "name": "vanilla extract", "grams": 4 }
+    ],
+    "steps": [
+      { "title": "Make the dough", "text": "In the stand mixer with the paddle attachment on low, mix the flour, sugar and half the salt with the cold butter until the butter is in pea-sized pieces. Add ice water a spoonful at a time until the dough just clumps. Pat into a disc and chill.", "time": "1 hour" },
+      { "title": "Roll and shape", "text": "Roll the dough about 3 mm thick, fit it into a 23 cm pie plate and crimp the edge. Freeze until firm.", "time": "15 min" },
+      { "title": "Blind bake", "text": "Blind bake the crust: line it with parchment and fill with baking weights or dried beans. Bake, then remove the weights and bake a few minutes more until the base looks dry.", "time": "25 min", "temp": "190 °C" },
+      { "title": "Whisk the filling", "text": "Whisk the pumpkin, evaporated milk, brown sugar, eggs, spices, the rest of the salt and the vanilla until completely smooth." },
+      { "title": "Fill and bake", "text": "Pour into the warm crust. Bake until the edges are set and the center jiggles like jelly. Cover the crust edge with foil if it browns too fast.", "time": "50-55 min", "temp": "175 °C" },
+      { "title": "Cool", "text": "Cool completely on a rack before slicing, because the filling finishes setting as it cools.", "time": "2 hours" }
+    ]
+  },
+  {
+    "id": "spinach-feta-turnovers",
+    "name": "Spinach & Feta Turnovers",
+    "emoji": "🥟",
+    "tags": ["savory", "puff pastry", "spinach", "feta", "party", "snack", "vegetarian", "quick"],
+    "totalTime": "about 1 hour",
+    "yield": "12 turnovers",
+    "ingredients": [
+      { "name": "puff pastry sheets, thawed", "grams": 500 },
+      { "name": "frozen chopped spinach, thawed and squeezed very dry", "grams": 200 },
+      { "name": "feta cheese, crumbled", "grams": 120 },
+      { "name": "scallions, finely chopped", "grams": 40 },
+      { "name": "garlic, grated", "grams": 5 },
+      { "name": "egg", "grams": 50 },
+      { "name": "black pepper", "grams": 1 },
+      { "name": "egg wash (1 beaten egg + 1 tbsp milk)", "grams": 60 }
+    ],
+    "steps": [
+      { "title": "Make the filling", "text": "Squeeze the thawed spinach in a clean towel until it is really dry. Mix with the feta, scallions, garlic, egg and pepper." },
+      { "title": "Cut the pastry", "text": "Unfold the pastry on a floured counter and cut each sheet into 6 rectangles, 12 in all." },
+      { "title": "Fill and seal", "text": "Put about a heaped tablespoon of filling on one half of each rectangle, fold over and press the edges closed with a fork. Place on parchment-lined trays." },
+      { "title": "Wash and chill", "text": "Brush with egg wash and cut a small steam slit in each one. Chill so the pastry stays cold going in.", "time": "15 min" },
+      { "title": "Bake", "text": "Bake until deeply golden and puffed. Cool for 5 minutes before serving.", "time": "20-25 min", "temp": "200 °C" }
+    ]
+  },
+  {
+    "id": "tomato-ricotta-galette",
+    "name": "Tomato & Ricotta Galette",
+    "emoji": "🍅",
+    "tags": ["savory", "galette", "tomato", "ricotta", "parmesan", "summer", "vegetarian", "brunch"],
+    "totalTime": "about 2 hours 15 minutes (including chilling)",
+    "yield": "6 servings, one 28 cm galette",
+    "ingredients": [
+      { "name": "all-purpose flour", "grams": 200 },
+      { "name": "cold unsalted butter, cubed", "grams": 120 },
+      { "name": "salt", "grams": 6 },
+      { "name": "ice water", "grams": 50 },
+      { "name": "ripe tomatoes, sliced 6 mm thick", "grams": 350 },
+      { "name": "ricotta", "grams": 150 },
+      { "name": "parmesan, finely grated", "grams": 40 },
+      { "name": "egg yolk", "grams": 20 },
+      { "name": "garlic, grated", "grams": 3 },
+      { "name": "fresh basil or thyme, chopped", "grams": 5 },
+      { "name": "olive oil", "grams": 10 },
+      { "name": "egg wash (1 beaten egg + 1 tbsp milk)", "grams": 40 }
+    ],
+    "steps": [
+      { "title": "Make the dough", "text": "In the stand mixer with the paddle attachment on low, mix the flour and half the salt with the cold butter until it forms pea-sized pieces. Add the ice water until the dough just clumps. Pat into a disc and chill.", "time": "45 min" },
+      { "title": "Salt the tomatoes", "text": "Lay the tomato slices on paper towels and sprinkle with a pinch of the remaining salt. Leave to draw out moisture, then pat dry. This keeps the crust crisp.", "time": "20 min" },
+      { "title": "Mix the filling", "text": "Stir together the ricotta, parmesan, egg yolk, garlic, herbs and a pinch of salt and pepper." },
+      { "title": "Roll and fill", "text": "Roll the dough into a rough 30 cm circle on parchment. Spread the ricotta filling over it, leaving a 5 cm border, and layer the tomatoes on top. Fold the border over the edge in loose pleats and brush it with egg wash. Drizzle the tomatoes with olive oil." },
+      { "title": "Bake", "text": "Bake until the crust is deep golden and the base is crisp. Cool 10 minutes before slicing.", "time": "40-45 min", "temp": "200 °C" }
+    ]
+  },
+  {
+    "id": "garlic-knots",
+    "name": "Garlic Knots",
+    "emoji": "🥨",
+    "tags": ["savory", "bread", "yeast", "garlic", "parmesan", "party", "snack", "side dish"],
+    "totalTime": "about 2 hours 15 minutes",
+    "yield": "16 knots",
+    "ingredients": [
+      { "name": "bread flour", "grams": 450 },
+      { "name": "lukewarm water", "grams": 280 },
+      { "name": "instant yeast", "grams": 6 },
+      { "name": "sugar", "grams": 10 },
+      { "name": "salt", "grams": 9 },
+      { "name": "olive oil", "grams": 30 },
+      { "name": "unsalted butter, melted", "grams": 60 },
+      { "name": "garlic, grated", "grams": 12 },
+      { "name": "fresh parsley, chopped", "grams": 8 },
+      { "name": "parmesan, finely grated (optional)", "grams": 20 }
+    ],
+    "steps": [
+      { "title": "Knead the dough", "text": "In the stand mixer with the dough hook, combine the flour, yeast, sugar and salt. Add the water and olive oil and knead on low-medium until smooth and elastic. It should pass the windowpane test.", "time": "8 min" },
+      { "title": "First rise", "text": "Put the dough in an oiled bowl, cover and leave until doubled in size.", "time": "1 hour" },
+      { "title": "Shape the knots", "text": "Divide the dough into 16 pieces. Roll each into a rope about 20 cm long and tie it into a loose knot. Place 4 cm apart on parchment-lined trays." },
+      { "title": "Second rise", "text": "Cover and leave until puffy.", "time": "30 min" },
+      { "title": "Bake", "text": "Bake until golden brown.", "time": "15-18 min", "temp": "200 °C" },
+      { "title": "Brush with garlic butter", "text": "While the knots bake, mix the melted butter with the garlic, parsley and a pinch of salt. Brush it over the knots as soon as they come out, and sprinkle with parmesan if using." }
+    ]
+  },
+  {
+    "id": "beer-bread",
+    "name": "Beer Bread",
+    "emoji": "🍞",
+    "tags": ["savory", "bread", "quick bread", "no yeast", "beer", "one bowl", "no mixer", "beginner", "loaf pan", "side dish"],
+    "totalTime": "about 1 hour 15 minutes",
+    "yield": "1 loaf",
+    "ingredients": [
+      { "name": "all-purpose flour", "grams": 375 },
+      { "name": "baking powder", "grams": 12 },
+      { "name": "salt", "grams": 6 },
+      { "name": "sugar", "grams": 50 },
+      { "name": "beer (a lager or ale), at room temperature", "grams": 355 },
+      { "name": "unsalted butter, melted", "grams": 60 }
+    ],
+    "steps": [
+      { "title": "Prep", "text": "Heat the oven and grease a 23 x 13 cm loaf pan.", "temp": "190 °C" },
+      { "title": "Mix the dry ingredients", "text": "In a large bowl, whisk together the flour, baking powder, salt and sugar." },
+      { "title": "Add the beer", "text": "Pour in the beer and stir with a spatula just until no dry streaks remain. The batter will be thick and sticky. Spoon it into the pan." },
+      { "title": "Add the butter", "text": "Pour the melted butter evenly over the top. It makes the crust golden and crisp." },
+      { "title": "Bake", "text": "Bake until deep golden and a toothpick comes out clean. Cool 10 minutes in the pan, then turn out.", "time": "50-55 min", "temp": "190 °C" }
+    ]
+  },
+  {
+    "id": "buttermilk-biscuits",
+    "name": "Flaky Buttermilk Biscuits",
+    "emoji": "🥐",
+    "tags": ["savory", "biscuit", "quick bread", "no yeast", "buttermilk", "breakfast", "one bowl", "no mixer", "side dish"],
+    "totalTime": "about 40 minutes",
+    "yield": "8 biscuits",
+    "ingredients": [
+      { "name": "all-purpose flour, plus extra for the counter", "grams": 270 },
+      { "name": "baking powder", "grams": 12 },
+      { "name": "sugar", "grams": 12 },
+      { "name": "salt", "grams": 3 },
+      { "name": "cold unsalted butter, cubed", "grams": 100 },
+      { "name": "cold buttermilk", "grams": 180 },
+      { "name": "unsalted butter, melted, for brushing", "grams": 15 }
+    ],
+    "steps": [
+      { "title": "Prep", "text": "Heat the oven and line a tray with parchment.", "temp": "220 °C" },
+      { "title": "Rub in the butter", "text": "Whisk the flour, baking powder, sugar and salt in a large bowl. Rub in the cold butter with your fingertips until it looks like coarse crumbs with some pea-sized pieces." },
+      { "title": "Add the buttermilk", "text": "Add the buttermilk and stir with a fork until a shaggy dough forms." },
+      { "title": "Fold for layers", "text": "Tip onto a floured counter and pat into a rectangle about 2.5 cm thick. Fold in thirds like a letter and pat out again. Repeat 3 times, finishing at 2.5 cm thick." },
+      { "title": "Cut", "text": "Cut 6 cm rounds straight down without twisting the cutter, which would seal the edges and stop them rising. Place touching on the tray. Re-pat the scraps once for the last biscuits." },
+      { "title": "Bake", "text": "Brush with melted butter and bake until tall and golden.", "time": "12-15 min", "temp": "220 °C" }
+    ]
+  },
+  {
+    "id": "double-chocolate-muffins",
+    "name": "Double Chocolate Muffins",
+    "emoji": "🧁",
+    "tags": ["muffin", "chocolate", "cocoa", "buttermilk", "breakfast", "beginner", "kid friendly", "party"],
+    "totalTime": "about 40 minutes",
+    "yield": "12 muffins",
+    "ingredients": [
+      { "name": "all-purpose flour", "grams": 230 },
+      { "name": "cocoa powder", "grams": 35 },
+      { "name": "sugar", "grams": 150 },
+      { "name": "baking powder", "grams": 10 },
+      { "name": "baking soda", "grams": 2 },
+      { "name": "salt", "grams": 3 },
+      { "name": "buttermilk", "grams": 240 },
+      { "name": "egg", "grams": 50 },
+      { "name": "neutral oil", "grams": 80 },
+      { "name": "vanilla extract", "grams": 5 },
+      { "name": "chocolate chips", "grams": 150 }
+    ],
+    "steps": [
+      { "title": "Prep", "text": "Heat the oven and line a 12-cup muffin tin with paper liners.", "temp": "190 °C" },
+      { "title": "Mix the dry ingredients", "text": "In a large bowl, whisk the flour, cocoa, sugar, baking powder, baking soda and salt." },
+      { "title": "Mix the wet ingredients", "text": "In a jug, whisk the buttermilk, egg, oil and vanilla." },
+      { "title": "Combine", "text": "Pour the wet mixture into the dry and fold with a spatula just until no dry flour remains. Lumps are fine, and overmixing makes tough muffins. Fold in 100 g of the chocolate chips." },
+      { "title": "Fill", "text": "Divide among the 12 liners, filling about three-quarters full. Scatter the remaining chips on top." },
+      { "title": "Bake", "text": "Bake until a toothpick comes out with a few moist crumbs. Cool 5 minutes in the tin.", "time": "18-22 min", "temp": "190 °C" }
+    ]
+  },
+  {
+    "id": "apple-cinnamon-muffins",
+    "name": "Apple Cinnamon Muffins",
+    "emoji": "🧁",
+    "tags": ["muffin", "apple", "cinnamon", "autumn", "breakfast", "beginner", "kid friendly"],
+    "totalTime": "about 45 minutes",
+    "yield": "12 muffins",
+    "ingredients": [
+      { "name": "all-purpose flour", "grams": 260 },
+      { "name": "brown sugar", "grams": 130 },
+      { "name": "baking powder", "grams": 10 },
+      { "name": "cinnamon", "grams": 5 },
+      { "name": "salt", "grams": 3 },
+      { "name": "egg", "grams": 50 },
+      { "name": "milk", "grams": 200 },
+      { "name": "neutral oil", "grams": 80 },
+      { "name": "vanilla extract", "grams": 5 },
+      { "name": "apples, peeled and diced small", "grams": 220 },
+      { "name": "cinnamon-sugar, for the tops (30 g sugar + 3 g cinnamon)", "grams": 33 }
+    ],
+    "steps": [
+      { "title": "Prep", "text": "Heat the oven and line a 12-cup muffin tin with paper liners.", "temp": "190 °C" },
+      { "title": "Mix the dry ingredients", "text": "In a large bowl, whisk the flour, brown sugar, baking powder, cinnamon and salt, breaking up any brown sugar lumps." },
+      { "title": "Mix the wet ingredients", "text": "In a jug, whisk the egg, milk, oil and vanilla." },
+      { "title": "Combine", "text": "Pour the wet mixture into the dry and fold just until no dry flour remains. Fold in the diced apple." },
+      { "title": "Fill and top", "text": "Divide among the liners, filling about three-quarters full, and sprinkle each with cinnamon-sugar." },
+      { "title": "Bake", "text": "Bake until golden and a toothpick comes out clean. Cool 5 minutes in the tin.", "time": "20-24 min", "temp": "190 °C" }
+    ]
+  },
+  {
+    "id": "zucchini-bread",
+    "name": "Zucchini Bread",
+    "emoji": "🍞",
+    "tags": ["loaf", "quick bread", "zucchini", "cinnamon", "walnut", "breakfast", "beginner", "make ahead", "loaf pan", "summer"],
+    "totalTime": "about 1 hour 30 minutes",
+    "yield": "1 loaf",
+    "ingredients": [
+      { "name": "all-purpose flour", "grams": 190 },
+      { "name": "sugar", "grams": 100 },
+      { "name": "brown sugar", "grams": 60 },
+      { "name": "eggs", "grams": 100 },
+      { "name": "neutral oil", "grams": 100 },
+      { "name": "grated zucchini", "grams": 200 },
+      { "name": "baking powder", "grams": 2 },
+      { "name": "baking soda", "grams": 3 },
+      { "name": "salt", "grams": 3 },
+      { "name": "cinnamon", "grams": 5 },
+      { "name": "vanilla extract", "grams": 5 },
+      { "name": "walnuts, chopped (optional)", "grams": 60 }
+    ],
+    "steps": [
+      { "title": "Prep", "text": "Heat the oven and grease and line a 23 x 13 cm loaf pan. Grate the zucchini and squeeze it gently in a clean towel to remove some of the water. Don't wring it completely dry.", "temp": "175 °C" },
+      { "title": "Mix the wet ingredients", "text": "Whisk the eggs, oil and both sugars until combined, then stir in the zucchini and vanilla." },
+      { "title": "Add the dry ingredients", "text": "Add the flour, baking powder, baking soda, salt and cinnamon and fold until just combined. Fold in the walnuts if using." },
+      { "title": "Bake", "text": "Pour into the pan and bake until a toothpick comes out clean. Cover loosely with foil if the top browns too fast.", "time": "55-60 min", "temp": "175 °C" },
+      { "title": "Cool", "text": "Cool 15 minutes in the pan, then turn out onto a rack.", "time": "15 min" }
+    ]
+  },
+  {
+    "id": "gingerbread-loaf",
+    "name": "Gingerbread Loaf",
+    "emoji": "🍞",
+    "tags": ["loaf", "gingerbread", "molasses", "ginger", "spice", "holiday", "winter", "autumn", "beginner", "make ahead", "gift", "loaf pan"],
+    "totalTime": "about 1 hour 20 minutes",
+    "yield": "1 loaf",
+    "ingredients": [
+      { "name": "all-purpose flour", "grams": 210 },
+      { "name": "molasses", "grams": 180 },
+      { "name": "brown sugar", "grams": 60 },
+      { "name": "unsalted butter", "grams": 65 },
+      { "name": "egg", "grams": 50 },
+      { "name": "hot water", "grams": 130 },
+      { "name": "baking soda", "grams": 4 },
+      { "name": "ground ginger", "grams": 6 },
+      { "name": "cinnamon", "grams": 3 },
+      { "name": "ground cloves", "grams": 1 },
+      { "name": "salt", "grams": 2 }
+    ],
+    "steps": [
+      { "title": "Prep", "text": "Heat the oven and grease and line a 23 x 13 cm loaf pan.", "temp": "175 °C" },
+      { "title": "Mix the wet ingredients", "text": "Melt the butter in a large bowl. Whisk in the brown sugar, molasses and egg. Stir the baking soda into the hot water until dissolved, then whisk that in too." },
+      { "title": "Add the dry ingredients", "text": "Fold in the flour, ginger, cinnamon, cloves and salt until just combined. The batter will be thin, which is normal." },
+      { "title": "Bake", "text": "Pour into the pan and bake until a toothpick comes out clean. Cool 15 minutes in the pan before turning out.", "time": "45-50 min", "temp": "175 °C" }
+    ]
+  },
+  {
+    "id": "lemon-poppy-seed-loaf",
+    "name": "Lemon Poppy Seed Loaf",
+    "emoji": "🍋",
+    "tags": ["loaf", "lemon", "citrus", "poppy seed", "yogurt", "glaze", "tea time", "spring", "beginner", "make ahead", "gift", "loaf pan"],
+    "totalTime": "about 1 hour 30 minutes",
+    "yield": "1 loaf",
+    "ingredients": [
+      { "name": "all-purpose flour", "grams": 190 },
+      { "name": "sugar", "grams": 150 },
+      { "name": "lemon zest (from 2 lemons)", "grams": 8 },
+      { "name": "eggs", "grams": 100 },
+      { "name": "plain yogurt", "grams": 120 },
+      { "name": "neutral oil", "grams": 80 },
+      { "name": "lemon juice", "grams": 40 },
+      { "name": "poppy seeds", "grams": 15 },
+      { "name": "baking powder", "grams": 6 },
+      { "name": "salt", "grams": 2 },
+      { "name": "vanilla extract", "grams": 4 },
+      { "name": "powdered sugar, for the glaze", "grams": 100 },
+      { "name": "lemon juice, for the glaze", "grams": 25 }
+    ],
+    "steps": [
+      { "title": "Prep", "text": "Heat the oven and grease and line a 23 x 13 cm loaf pan.", "temp": "175 °C" },
+      { "title": "Zest and sugar", "text": "In a large bowl, rub the lemon zest into the sugar with your fingertips until fragrant and damp. This releases the lemon oils." },
+      { "title": "Add the wet ingredients", "text": "Whisk in the eggs, yogurt, oil, lemon juice and vanilla until smooth." },
+      { "title": "Add the dry ingredients", "text": "Fold in the flour, baking powder, salt and poppy seeds just until combined." },
+      { "title": "Bake", "text": "Pour into the pan and bake until a toothpick comes out clean. Cool 15 minutes in the pan, then turn out onto a rack and cool completely.", "time": "45-50 min", "temp": "175 °C" },
+      { "title": "Glaze", "text": "Whisk the powdered sugar and the glaze lemon juice until smooth and drizzle over the cooled loaf. Leave to set." }
+    ]
+  }
+]
