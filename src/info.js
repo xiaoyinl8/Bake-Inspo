@@ -57,9 +57,30 @@ export const INFO = {
   "cheese-straws": { store: "Keep 3 days airtight; re-crisp in a warm oven if needed." },
   "bread-pudding": { store: "Keeps 3 days covered in the fridge; reheat slices in a warm oven.", pan: ["square", [23]] },
   "banana-oat-muffins": { store: "Keep 2 days airtight at room temperature; freeze for up to 2 months." },
+  "no-bake-cheesecake": { store: "Keeps 4 days covered in the fridge. Freezes well for 1 month; thaw overnight in the fridge.", pan: ["round", [20]] },
+  "chocolate-truffles": { store: "Keep 2 weeks in the fridge in an airtight container; they taste best after 20 minutes at room temperature. Freeze for 2 months." },
+  "icebox-cake": { store: "Keeps 3 days in the fridge, and the texture improves after a night. Freeze for up to 1 month." },
+  "panna-cotta": { store: "Keeps 3 days covered in the fridge. Don't freeze it." },
+  "crispy-rice-treats": { store: "Keep 3 days airtight at room temperature; they get stale if refrigerated. Freeze for 1 month.", pan: ["square", [23]] },
+  "cookie-dough-bites": { store: "Keep refrigerated for up to 5 days (they contain no preservatives). Freeze for 2 months." },
+  "no-bake-chocolate-oat-cookies": { store: "Keep 5 days airtight at room temperature, with parchment between layers." },
+  "chocolate-mousse": { store: "Keeps 2 days covered in the fridge. Best the day after making it. Don't freeze it." },
+  "key-lime-pie": { store: "Keeps 3 days covered in the fridge. Add the whipped cream just before serving." },
+  "pumpkin-pie": { store: "Keeps 3 to 4 days covered in the fridge. The unbaked dough disc freezes for 2 months." },
+  "spinach-feta-turnovers": { store: "Best the day they're baked. Freeze unbaked turnovers for 1 month and bake from frozen, adding 5 minutes." },
+  "tomato-ricotta-galette": { store: "Best the day it's baked. Keeps 2 days in the fridge; reheat in the oven to re-crisp the crust." },
+  "garlic-knots": { store: "Best the day they're baked. Freeze for 1 month and reheat wrapped in foil." },
+  "beer-bread": { store: "Keeps 3 days wrapped at room temperature. Slices freeze well for 2 months." },
+  "buttermilk-biscuits": { store: "Best warm and the same day. Freeze cut, unbaked biscuits and bake from frozen, adding 3 to 5 minutes." },
+  "double-chocolate-muffins": { store: "Keep 2 days airtight at room temperature; freeze for up to 2 months." },
+  "apple-cinnamon-muffins": { store: "Keep 2 days airtight at room temperature (they're moist, so use the fridge if your kitchen is warm); freeze for 2 months." },
+  "zucchini-bread": { store: "Keeps 3 days wrapped at room temperature or 1 week in the fridge; slices freeze for 3 months." },
+  "gingerbread-loaf": { store: "Keeps 4 days wrapped and gets stickier and spicier on day two. Freezes well for 3 months." },
+  "lemon-poppy-seed-loaf": { store: "Keeps 3 days wrapped at room temperature; freeze unglazed for 2 months." },
 };
 
-// Recipes that really need just one mixing bowl, and ones baked in a loaf pan
+// Hand-picked lists for the "One bowl / pot" and "Loaf pan" filters.
+// New recipes don't need to be added here: tag them "one bowl", "one pot" or "loaf pan" in their JSON file instead.
 export const ONE_BOWL = new Set([
   "blondies", "peanut-butter-cookies", "irish-soda-bread", "one-bowl-chocolate-cake",
   "chocolate-chip-cookies", "oatmeal-raisin-cookies", "ginger-molasses-cookies", "tahini-chocolate-cookies",
@@ -69,6 +90,8 @@ export const ONE_BOWL = new Set([
 export const LOAF_PAN = new Set([
   "pistachio-bread", "brioche-loaf", "brown-butter-banana-bread", "vanilla-pound-cake", "milk-bread",
 ]);
+export const isOneBowl = (r) => ONE_BOWL.has(r.id) || r.tags.includes("one bowl") || r.tags.includes("one pot");
+export const isLoafPan = (r) => LOAF_PAN.has(r.id) || r.tags.includes("loaf pan");
 
 // Worked out from the step text, so new recipes are picked up automatically
 export const isNoMixer = (r) => !r.steps.some((s) => /mixer|paddle|dough hook|whisk attachment/i.test(s.text));
@@ -78,7 +101,8 @@ const PROJECT_TAGS = ["impressive", "choux", "enriched", "laminated", "tangzhong
 export function levelOf(r) {
   if (r.tags.includes("beginner")) return "Beginner";
   const hours = /(\d+)\s*hour/.exec(r.totalTime);
-  if (PROJECT_TAGS.some((t) => r.tags.includes(t)) || (hours && +hours[1] >= 3)) return "Project";
+  const mostlyWaiting = /chill|cool/i.test(r.totalTime); // long only because of chilling, not hands-on work
+  if (PROJECT_TAGS.some((t) => r.tags.includes(t)) || (hours && +hours[1] >= 3 && !mostlyWaiting)) return "Project";
   return "Intermediate";
 }
 
