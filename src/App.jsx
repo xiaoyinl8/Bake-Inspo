@@ -1,7 +1,9 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { TREE } from "./categories.js";
 import { Icon } from "./icons.jsx";
-import { INFO, ONE_BOWL, LOAF_PAN, PANS, panOf, panLabel, panArea, levelOf, isNoMixer, isNoOven } from "./info.js";
+import { INFO, PANS, panOf, panLabel, panArea, levelOf, isNoMixer, isNoOven, isOneBowl, isLoafPan } from "./info.js";
+import { MOODS } from "./moods.js";
+import { glossify } from "./glossary.js";
 import {
   DIET_FILTERS, fmtAmount, substitutionsFor, seasonName, seasonalRecipes,
   suggestRecipes, combine, dailyPick, LEFTOVERS, related,
@@ -75,6 +77,13 @@ const timerMinutes = (t) => {
   return m ? (m[2] === "hour" ? +m[1] * 60 : +m[1]) : 0;
 };
 
+// The link people copy. On the live site it points at the per-recipe share page (r/<id>/),
+// which has a proper title and description for previews, then sends visitors into the app.
+const shareUrl = (id) =>
+  import.meta.env.PROD
+    ? new URL(`r/${id}/`, location.origin + location.pathname.replace(/[^/]*$/, "")).href
+    : location.href;
+
 const FILTER_GROUPS = {
   "Quick picks": {
     "Under 1 hour": (r) => minutesOf(r) <= 60,
@@ -83,10 +92,10 @@ const FILTER_GROUPS = {
     "Few ingredients": (r) => r.ingredients.length <= 6,
   },
   Equipment: {
-    "One bowl": (r) => ONE_BOWL.has(r.id),
+    "One bowl / pot": isOneBowl,
     "No mixer": isNoMixer,
     "No oven": isNoOven,
-    "Loaf pan": (r) => LOAF_PAN.has(r.id),
+    "Loaf pan": isLoafPan,
   },
   Dietary: DIET_FILTERS,
 };
@@ -247,7 +256,7 @@ function UseItUp({ onPick }) {
         {LEFTOVERS.map(([label, re]) => {
           const n = recipes.filter((r) => r.ingredients.some((i) => re.test(i.name))).length;
           return n > 0 ? (
-            <button key={label} className="pill" onClick={() => onPick(label)}>
+            <button key={label} className="pill" onClick={() => onPick({ kind: "leftover", label })}>
               {label} <span className="count">{n}</span>
             </button>
           ) : null;
@@ -268,15 +277,47 @@ function SeasonRow({ cardProps }) {
   );
 }
 
-function Leftover({ label, filterProps, cardProps, onBack }) {
-  const re = LEFTOVERS.find(([l]) => l === label)?.[1];
-  const list = re ? recipes.filter((r) => r.ingredients.some((i) => re.test(i.name))) : [];
+function Moods({ onPick }) {
+  const counts = useMemo(() => MOODS.map((m) => recipes.filter(m.test).length), []);
+  return (
+    <section className="moods">
+      <h2 className="season-title">What's the vibe?</h2>
+      <div className="grid mood-grid">
+        {MOODS.map((m, i) =>
+          counts[i] > 0 ? (
+            <Tile
+              key={m.label}
+              icon={m.icon}
+              name={m.label}
+              tint={i + 2}
+              meta={`${counts[i]} ${counts[i] === 1 ? "recipe" : "recipes"}`}
+              onClick={() => onPick({ kind: "mood", label: m.label })}
+            />
+          ) : null
+        )}
+      </div>
+    </section>
+  );
+}
+
+// A "collection" is a mood tile or a leftover chip: a named list of recipes outside the category tree
+function collectionList(c) {
+  if (c.kind === "mood") {
+    const m = MOODS.find((x) => x.label === c.label);
+    return m ? recipes.filter(m.test) : [];
+  }
+  const re = LEFTOVERS.find(([l]) => l === c.label)?.[1];
+  return re ? recipes.filter((r) => r.ingredients.some((i) => re.test(i.name))) : [];
+}
+
+function Collection({ coll, filterProps, cardProps, onBack }) {
+  const list = collectionList(coll);
   return (
     <>
       <nav className="crumbs" aria-label="Breadcrumb">
         <button onClick={onBack}>All</button>
         <span aria-hidden="true">›</span>
-        <strong>Using up: {label}</strong>
+        <strong>{coll.kind === "mood" ? coll.label : `Using up: ${coll.label}`}</strong>
       </nav>
       <FilterBar {...filterProps} />
       <RecipeGrid list={list} active={filterProps.active} cardProps={cardProps} />
@@ -284,7 +325,7 @@ function Leftover({ label, filterProps, cardProps, onBack }) {
   );
 }
 
-function BrowseTree({ path, setPath, filterProps, cardProps, onLeftover }) {
+function BrowseTree({ path, setPath, filterProps, cardProps, onCollection }) {
   const node = path[path.length - 1];
   return (
     <>
@@ -310,7 +351,8 @@ function BrowseTree({ path, setPath, filterProps, cardProps, onLeftover }) {
         </section>
       )}
       {!node && <Today cardProps={cardProps} />}
-      {!node && <UseItUp onPick={onLeftover} />}
+      {!node && <Moods onPick={onCollection} />}
+      {!node && <UseItUp onPick={onCollection} />}
       {!node && <SeasonRow cardProps={cardProps} />}
     </>
   );
@@ -366,6 +408,38 @@ function Pantry({ have, setHave, cardProps }) {
   );
 }
 
+/* ---------- step text with tappable glossary words ---------- */
+function Gloss({ parts, className }) {
+  const [open, setOpen] = useState(null);
+  const shown = parts.find((p) => p.term?.key === open)?.term;
+  return (
+    <>
+      <p className={className}>
+        {parts.map((p, i) =>
+          p.term ? (
+            <button
+              key={i}
+              type="button"
+              className="term"
+              aria-expanded={open === p.term.key}
+              onClick={() => setOpen(open === p.term.key ? null : p.term.key)}
+            >
+              {p.text}
+            </button>
+          ) : (
+            <span key={i}>{p.text}</span>
+          )
+        )}
+      </p>
+      {shown && (
+        <p className="gloss-def" role="note">
+          <strong>{shown.title}:</strong> {shown.def}
+        </p>
+      )}
+    </>
+  );
+}
+
 /* ---------- cook mode ---------- */
 function Timer({ minutes }) {
   const [left, setLeft] = useState(minutes * 60);
@@ -410,6 +484,7 @@ function CookMode({ recipe, fahrenheit, onExit }) {
   const [i, setI] = useState(0);
   const step = recipe.steps[i];
   const last = i === recipe.steps.length - 1;
+  const parts = useMemo(() => glossify(fmtTemp(step.text, fahrenheit), new Set()), [step, fahrenheit]);
 
   useEffect(() => {
     let lock;
@@ -422,14 +497,14 @@ function CookMode({ recipe, fahrenheit, onExit }) {
       <button className="back" onClick={onExit}>✕ Exit</button>
       <p className="card-meta">{recipe.name} · Step {i + 1} of {recipe.steps.length}</p>
       <h2>{step.title}</h2>
-      <p className="cook-text">{fmtTemp(step.text, fahrenheit)}</p>
+      <Gloss key={`g${i}`} parts={parts} className="cook-text" />
       {(step.time || step.temp) && (
         <p className="chips">
           {step.time && <span className="chip">⏱ {step.time}</span>}
           {step.temp && <span className="chip">🌡 {fmtTemp(step.temp, fahrenheit)}</span>}
         </p>
       )}
-      <Timer key={i} minutes={timerMinutes(step.time)} />
+      <Timer key={`t${i}`} minutes={timerMinutes(step.time)} />
       <div className="cook-nav">
         <button className="back" onClick={() => setI(i - 1)} disabled={i === 0}>← Previous</button>
         <button className="surprise" onClick={() => (last ? onExit() : setI(i + 1))}>
@@ -487,11 +562,15 @@ function RecipePage({ recipe, fahrenheit, cups, saved, onSave, inList, onToggleL
   const pan = panOf(recipe);
   const info = INFO[recipe.id];
   const more = useMemo(() => related(recipe, recipes), [recipe]);
+  const stepParts = useMemo(() => {
+    const seen = new Set();
+    return recipe.steps.map((s) => glossify(fmtTemp(s.text, fahrenheit), seen));
+  }, [recipe, fahrenheit]);
 
   const tick = (n) => setDone(done.includes(n) ? done.filter((x) => x !== n) : [...done, n]);
   const copy = async () => {
     try {
-      await navigator.clipboard.writeText(location.href);
+      await navigator.clipboard.writeText(shareUrl(recipe.id));
       setCopied(true);
       setTimeout(() => setCopied(false), 1500);
     } catch { /* ignore */ }
@@ -551,7 +630,7 @@ function RecipePage({ recipe, fahrenheit, cups, saved, onSave, inList, onToggleL
             <li key={idx} className="step">
               <div className="step-text">
                 <h4>{s.title}</h4>
-                <p>{fmtTemp(s.text, fahrenheit)}</p>
+                <Gloss parts={stepParts[idx]} />
                 {(s.time || s.temp) && (
                   <p className="chips">
                     {s.time && <span className="chip">⏱ {s.time}</span>}
@@ -734,7 +813,7 @@ export default function App() {
   const [view, setView] = useState("browse");
   const [query, setQuery] = useState("");
   const [path, setPath] = useState([]);
-  const [leftover, setLeftover] = useState(null);
+  const [coll, setColl] = useState(null);
   const [selected, setSelected] = useState(null);
   const [missingId, setMissingId] = useState(null);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -752,7 +831,7 @@ export default function App() {
 
   useEffect(() => { document.documentElement.dataset.theme = theme; }, [theme]);
   useEffect(() => { document.title = selected ? `${selected.name} · Bake Inspo` : "Bake Inspo"; }, [selected]);
-  useEffect(() => { window.scrollTo(0, 0); }, [selected, view, path.length, leftover]);
+  useEffect(() => { window.scrollTo(0, 0); }, [selected, view, path.length, coll]);
 
   // Shareable links: #/r/<recipe-id>, with a friendly message if the id no longer exists
   useEffect(() => {
@@ -777,7 +856,7 @@ export default function App() {
   const toggleCart = (id) => setCart(cart.includes(id) ? cart.filter((x) => x !== id) : [...cart, id]);
   const toggleFilter = (f) => setActive(active.includes(f) ? active.filter((x) => x !== f) : [...active, f]);
   const setNote = (id, text) => setNotes({ ...notes, [id]: text });
-  const go = (v) => { setView(v); setPath([]); setLeftover(null); setQuery(""); setMenuOpen(false); closeRecipe(); };
+  const go = (v) => { setView(v); setPath([]); setColl(null); setQuery(""); setMenuOpen(false); closeRecipe(); };
 
   const cardProps = { saved, onOpen: openRecipe, onSave: toggleSave };
   const filterProps = { active, onToggle: toggleFilter, onClear: () => setActive([]) };
@@ -829,11 +908,11 @@ export default function App() {
     ) : (
       <NoMatch query={query} cardProps={cardProps} onPick={(p) => { setQuery(""); setPath(p); }} />
     );
-  } else if (leftover) {
-    content = <Leftover label={leftover} filterProps={filterProps} cardProps={cardProps} onBack={() => setLeftover(null)} />;
+  } else if (coll) {
+    content = <Collection coll={coll} filterProps={filterProps} cardProps={cardProps} onBack={() => setColl(null)} />;
   } else {
     content = (
-      <BrowseTree path={path} setPath={setPath} filterProps={filterProps} cardProps={cardProps} onLeftover={setLeftover} />
+      <BrowseTree path={path} setPath={setPath} filterProps={filterProps} cardProps={cardProps} onCollection={setColl} />
     );
   }
 
