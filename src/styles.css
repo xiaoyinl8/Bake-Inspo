@@ -371,3 +371,24 @@ main { position: relative; z-index: 1; }
   background: var(--bg); border: 2px solid var(--pistachio); border-radius: 14px; resize: vertical;
 }
 .notes textarea:focus-visible { outline: 3px solid var(--butter); outline-offset: 2px; }
+
+/* ===== mood tiles ===== */
+.moods { margin-top: 36px; }
+.mood-grid { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
+.mood-grid .card-icon { width: 52px; height: 52px; }
+
+/* ===== glossary words in steps ===== */
+.term {
+  font: inherit; color: inherit; background: none; border: 0; padding: 0;
+  border-bottom: 2px dotted var(--berry); cursor: help;
+}
+.term:hover, .term[aria-expanded="true"] { background: color-mix(in srgb, var(--butter) 55%, transparent); }
+.term:focus-visible { outline: 3px solid var(--butter); outline-offset: 2px; }
+.gloss-def {
+  margin: 4px 0 10px; padding: 10px 14px; font-size: 0.95rem;
+  background: var(--bg); border-left: 4px solid var(--butter); border-radius: 10px;
+}
+@media print {
+  .term { border: 0; cursor: auto; }
+  .gloss-def { display: none; }
+}
