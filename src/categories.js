@@ -1,7 +1,7 @@
 // The menu is a tree: big groups -> types -> niche groups -> recipes.
 // A node has either "children" (more choices) or "ids" (recipe ids from your JSON).
 // "icon" picks the little drawing on the tile (cookie, brownie, cake, cupcake, loaf, roll,
-// pie, tart, croissant, dessert, cheese, pretzel, sparkle). Children inherit their parent's icon.
+// pie, tart, croissant, dessert, cheese, pretzel, sparkle, gift, clock, mug). Children inherit their parent's icon.
 // Each recipe should appear once. If an id is listed twice, only its first spot counts.
 export const TREE = [
   {
@@ -20,8 +20,8 @@ export const TREE = [
         name: "Cakes & Cupcakes", emoji: "🎂", icon: "cake",
         children: [
           { name: "Layer & sheet cakes", ids: ["one-bowl-chocolate-cake", "carrot-cake", "cinnamon-streusel-coffee-cake"] },
-          { name: "Loaf cakes", icon: "loaf", ids: ["vanilla-pound-cake", "lemon-olive-oil-cake", "brown-butter-banana-bread"] },
-          { name: "Cupcakes & muffins", icon: "cupcake", ids: ["vanilla-cupcakes", "lemon-blueberry-muffins", "banana-oat-muffins"] },
+          { name: "Loaf cakes", icon: "loaf", ids: ["vanilla-pound-cake", "lemon-olive-oil-cake", "brown-butter-banana-bread", "lemon-poppy-seed-loaf", "zucchini-bread", "gingerbread-loaf"] },
+          { name: "Cupcakes & muffins", icon: "cupcake", ids: ["vanilla-cupcakes", "lemon-blueberry-muffins", "banana-oat-muffins", "double-chocolate-muffins", "apple-cinnamon-muffins"] },
           { name: "Small & individual cakes", ids: ["chocolate-lava-cakes", "almond-financiers", "matcha-madeleines"] }
         ]
       },
@@ -29,12 +29,19 @@ export const TREE = [
       {
         name: "Pies & Tarts", emoji: "🥧", icon: "pie",
         children: [
-          { name: "Pies", ids: ["apple-pie", "pecan-pie"] },
+          { name: "Pies", ids: ["apple-pie", "pecan-pie", "pumpkin-pie", "key-lime-pie"] },
           { name: "Tarts & galettes", icon: "tart", ids: ["lemon-tart", "fruit-tart-pastry-cream", "hong-kong-egg-tarts", "apple-cinnamon-galette"] }
         ]
       },
       { name: "Pastries", emoji: "🥐", icon: "croissant", ids: ["apple-turnovers", "easy-chocolate-croissants", "choux-cream-puffs"] },
-      { name: "Creamy & Chilled", emoji: "🍮", icon: "dessert", ids: ["basque-cheesecake", "tiramisu", "mini-pavlovas"] }
+      {
+        name: "Creamy & Chilled", emoji: "🍮", icon: "dessert",
+        children: [
+          { name: "Cheesecakes & custards", ids: ["basque-cheesecake", "no-bake-cheesecake", "panna-cotta"] },
+          { name: "Whipped & layered", ids: ["tiramisu", "icebox-cake", "chocolate-mousse", "mini-pavlovas"] }
+        ]
+      },
+      { name: "No-Bake Treats", emoji: "🍬", icon: "brownie", ids: ["chocolate-truffles", "crispy-rice-treats", "no-bake-chocolate-oat-cookies", "cookie-dough-bites"] }
     ]
   },
   {
@@ -43,12 +50,12 @@ export const TREE = [
       {
         name: "Breads & Rolls", emoji: "🍞", icon: "loaf",
         children: [
-          { name: "Everyday loaves & rolls", ids: ["focaccia", "soft-dinner-rolls", "pistachio-bread"] },
+          { name: "Everyday loaves & rolls", ids: ["focaccia", "soft-dinner-rolls", "garlic-knots", "pistachio-bread"] },
           { name: "Chewy & boiled", ids: ["bagels", "soft-pretzels"] },
-          { name: "Quick breads (no yeast)", ids: ["skillet-cornbread", "irish-soda-bread", "cheddar-biscuits"] }
+          { name: "Quick breads (no yeast)", ids: ["skillet-cornbread", "irish-soda-bread", "beer-bread", "buttermilk-biscuits", "cheddar-biscuits"] }
         ]
       },
-      { name: "Pastry & Party Bites", emoji: "🥨", icon: "pretzel", ids: ["quiche-lorraine", "parmesan-palmiers", "cheese-straws", "sausage-rolls", "gougeres"] }
+      { name: "Pastry & Party Bites", emoji: "🥨", icon: "pretzel", ids: ["quiche-lorraine", "tomato-ricotta-galette", "spinach-feta-turnovers", "parmesan-palmiers", "cheese-straws", "sausage-rolls", "gougeres"] }
     ]
   }
 ];
