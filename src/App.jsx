@@ -10,7 +10,7 @@ import {
 } from "./extras.js";
 
 // Change this to your repo's issues page (or a mailto: link) so visitors can report wrong amounts
-const FEEDBACK_URL = "https://github.com/YOUR-USERNAME/YOUR-REPO/issues/new";
+const FEEDBACK_URL = "https://github.com/xiaoyinl8/Bake-Inspo/issues/new";
 
 const recipeFiles = import.meta.glob("./data/*.json", { eager: true });
 const recipes = Object.values(recipeFiles).flatMap((m) => m.default);
@@ -61,6 +61,8 @@ const minutesOf = (r) => {
   const m = /(\d+)\s*min/.exec(r.totalTime);
   return (h ? +h[1] * 60 : 0) + (m ? +m[1] : 0);
 };
+// 1.5 -> "1.5", 1.3333 -> "1.33"
+const fmtMult = (m) => String(Math.round(m * 100) / 100);
 const fmtMins = (m) => (m < 60 ? `${m} min` : `${Math.floor(m / 60)} h${m % 60 ? ` ${m % 60}` : ""}`);
 
 // "190 °C" -> "375 °F", "26-28 °C" -> "80-85 °F" (works inside sentences too)
@@ -515,6 +517,32 @@ function CookMode({ recipe, fahrenheit, onExit }) {
   );
 }
 
+/* ---------- type-your-own amount: change one ingredient and the rest follow ---------- */
+function AmountInput({ grams, mult, name, onScale }) {
+  const [text, setText] = useState(null); // what the person is typing; null = show the computed amount
+  const shown = text ?? String(Math.round(grams * mult * 10) / 10);
+  return (
+    <span className="amt">
+      <input
+        type="number"
+        inputMode="decimal"
+        min="0"
+        step="any"
+        className="amt-input"
+        value={shown}
+        aria-label={`Grams of ${name}`}
+        onChange={(e) => {
+          setText(e.target.value);
+          const n = parseFloat(e.target.value);
+          if (n > 0) onScale(n / grams);
+        }}
+        onBlur={() => setText(null)}
+      />
+      <span className="unit">g</span>
+    </span>
+  );
+}
+
 /* ---------- recipe page ---------- */
 function RecipeHeader({ recipe, mult }) {
   return (
@@ -524,7 +552,7 @@ function RecipeHeader({ recipe, mult }) {
         <h2>{recipe.name}</h2>
         <div className="stats">
           <div><span>Time</span><strong>{recipe.totalTime}</strong></div>
-          <div><span>Makes</span><strong>{recipe.yield}{mult !== 1 ? ` (×${mult})` : ""}</strong></div>
+          <div><span>Makes</span><strong>{recipe.yield}{mult !== 1 ? ` (×${fmtMult(mult)})` : ""}</strong></div>
           <div><span>Level</span><strong>{levelOf(recipe)}</strong></div>
         </div>
       </div>
@@ -544,7 +572,7 @@ function PanHelper({ pan, choice, mult, onChoose }) {
       </label>
       {choice && (
         <p className="note">
-          Amounts scaled ×{mult} for a {choice} pan. For eggs, whisk and weigh out the amount. Batter depth changes,
+          Amounts scaled ×{fmtMult(mult)} for a {choice} pan. For eggs, whisk and weigh out the amount. Batter depth changes,
           so start checking for doneness a few minutes early in a wider pan, or later in a deeper one.
         </p>
       )}
@@ -575,6 +603,9 @@ function RecipePage({ recipe, fahrenheit, cups, saved, onSave, inList, onToggleL
       setTimeout(() => setCopied(false), 1500);
     } catch { /* ignore */ }
   };
+  const scaleTo = (m) => { setMult(m); setPanChoice(""); };
+  const hasEggs = recipe.ingredients.some((i) => /\begg/i.test(i.name) && !/egg wash/i.test(i.name));
+  const hasTiny = recipe.ingredients.some((i) => i.grams * mult < 1);
   const choosePan = (label) => {
     setPanChoice(label);
     const p = PANS.find((x) => x.label === label);
@@ -600,20 +631,40 @@ function RecipePage({ recipe, fahrenheit, cups, saved, onSave, inList, onToggleL
         <h3>What you need</h3>
         <div className="servings no-print" role="group" aria-label="Scale recipe">
           {[0.5, 1, 2, 3].map((m) => (
-            <button key={m} className="pill" aria-pressed={mult === m} onClick={() => { setMult(m); setPanChoice(""); }}>×{m}</button>
+            <button key={m} className="pill" aria-pressed={mult === m} onClick={() => scaleTo(m)}>×{m}</button>
           ))}
+          {mult !== 1 && <button className="linkish" onClick={() => scaleTo(1)}>Reset to original</button>}
         </div>
+        <p className="note no-print">
+          {cups
+            ? "Switch to Grams (top right) to type your own amounts."
+            : "Want a different amount? Type it into any ingredient below (like 300 g flour) and everything else scales to match."}
+        </p>
         {pan && <PanHelper pan={pan} choice={panChoice} mult={mult} onChoose={choosePan} />}
         <ul className="checklist">
           {recipe.ingredients.map((ing, n) => (
             <li key={n} className={done.includes(n) ? "done" : ""}>
               <label>
                 <input type="checkbox" checked={done.includes(n)} onChange={() => tick(n)} />
-                <span><strong>{fmtAmount(ing.grams * mult, ing.name, cups)}</strong> {ing.name}</span>
+                <span>
+                  {cups ? (
+                    <strong>{fmtAmount(ing.grams * mult, ing.name, cups)}</strong>
+                  ) : (
+                    <AmountInput grams={ing.grams} mult={mult} name={ing.name} onScale={setMult} />
+                  )}{" "}
+                  {ing.name}
+                </span>
               </label>
             </li>
           ))}
         </ul>
+        {mult !== 1 && (
+          <p className="note">
+            Scaled ×{fmtMult(mult)} from the original.
+            {hasEggs && " For eggs, whisk them and weigh out the amount."}
+            {hasTiny && " Amounts under 1 g are hard to measure, so a pinch is fine for salt and spices."}
+          </p>
+        )}
       </section>
 
       {subs.length > 0 && (
