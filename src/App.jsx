@@ -635,26 +635,32 @@ function RecipePage({ recipe, fahrenheit, cups, saved, onSave, inList, onToggleL
           ))}
           {mult !== 1 && <button className="linkish" onClick={() => scaleTo(1)}>Reset to original</button>}
         </div>
-        <p className="note no-print">
+                <p className="note no-print">
           {cups
             ? "Switch to Grams (top right) to type your own amounts."
-            : "Want a different amount? Type it into any ingredient below (like 300 g flour) and everything else scales to match."}
+            : "Type an amount in the Your amount column (like 300 g flour) and everything else scales to match."}
         </p>
         {pan && <PanHelper pan={pan} choice={panChoice} mult={mult} onChoose={choosePan} />}
-        <ul className="checklist">
+        <div className="ing-head" aria-hidden="true">
+          <span>Original recipe</span>
+          <span>Your amount</span>
+        </div>
+        <ul className="checklist ing-list">
           {recipe.ingredients.map((ing, n) => (
-            <li key={n} className={done.includes(n) ? "done" : ""}>
-              <label>
+            <li key={n} className={`ing-row${done.includes(n) ? " done" : ""}`}>
+              <label className="ing-orig">
                 <input type="checkbox" checked={done.includes(n)} onChange={() => tick(n)} />
                 <span>
-                  {cups ? (
-                    <strong>{fmtAmount(ing.grams * mult, ing.name, cups)}</strong>
-                  ) : (
-                    <AmountInput grams={ing.grams} mult={mult} name={ing.name} onScale={setMult} />
-                  )}{" "}
-                  {ing.name}
+                  <strong>{fmtAmount(ing.grams, ing.name, cups)}</strong> {ing.name}
                 </span>
               </label>
+              <div className="ing-your">
+                {cups ? (
+                  <strong>{fmtAmount(ing.grams * mult, ing.name, cups)}</strong>
+                ) : (
+                  <AmountInput grams={ing.grams} mult={mult} name={ing.name} onScale={setMult} />
+                )}
+              </div>
             </li>
           ))}
         </ul>
