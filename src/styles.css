@@ -392,3 +392,16 @@ main { position: relative; z-index: 1; }
   .term { border: 0; cursor: auto; }
   .gloss-def { display: none; }
 }
+
+/* ===== type-your-own ingredient amounts ===== */
+.amt { display: inline-flex; align-items: baseline; gap: 4px; }
+.amt-input {
+  width: 5.5em; min-height: 40px; padding: 4px 8px; font: inherit; font-weight: 700; text-align: right;
+  color: var(--ink); background: var(--bg); border: 2px solid var(--pistachio); border-radius: 10px;
+}
+.amt-input:focus-visible { outline: 3px solid var(--butter); outline-offset: 2px; }
+.amt .unit { font-weight: 700; }
+.servings { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+@media print {
+  .amt-input { border: 0; background: none; width: auto; padding: 0; appearance: textfield; }
+}
