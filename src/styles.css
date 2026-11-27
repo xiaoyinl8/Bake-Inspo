@@ -405,3 +405,51 @@ main { position: relative; z-index: 1; }
 @media print {
   .amt-input { border: 0; background: none; width: auto; padding: 0; appearance: textfield; }
 }
+
+/* ===== original column + "Your amount" column ===== */
+.ing-head, ul.checklist.ing-list li.ing-row {
+  display: grid;
+  grid-template-columns: 1fr 9.5em;
+  align-items: center;
+  gap: 10px;
+}
+.ing-head {
+  padding: 0 14px;
+  margin: 8px 0 4px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  opacity: 0.7;
+}
+.ing-head span:last-child { text-align: right; }
+ul.checklist.ing-list li.ing-row label.ing-orig {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+.ing-your { display: flex; justify-content: flex-end; }
+.ing-your .amt { display: inline-flex; align-items: center; gap: 4px; }
+ul.checklist .amt-input {
+  width: 6.5em !important;
+  min-width: 0 !important;
+  height: auto !important;
+  min-height: 44px;
+  padding: 4px 10px !important;
+  font: inherit;
+  font-weight: 700;
+  text-align: right;
+  color: var(--ink, #2b1a10);
+  background: var(--bg, #fffaf0);
+  border: 2px solid var(--pistachio, #d9a96a);
+  border-radius: 12px !important;
+  -webkit-appearance: textfield;
+  appearance: textfield;
+}
+ul.checklist .amt-input:focus-visible { outline: 3px solid var(--butter, #f3d27a); outline-offset: 2px; }
+.ing-your .unit { font-weight: 700; }
+@media print {
+  .ing-head { display: none; }
+  ul.checklist .amt-input { border: 0; background: none; width: auto !important; padding: 0 !important; }
+}
